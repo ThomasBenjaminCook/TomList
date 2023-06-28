@@ -41,7 +41,7 @@
       width: 97%;
       background-color: rgba(255,50,10,0.3);
       height: 43%;
-      top: 57%;
+      top: 55.5%;
       padding: 1.5%;
     }
 
