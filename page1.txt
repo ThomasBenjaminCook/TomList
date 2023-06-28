@@ -21,8 +21,8 @@
 </head>
 <body>
   <div id="menu">
-    <span class="menu-item" data-slide="slide1">Slide 1</span>
-    <span class="menu-item" data-slide="slide2">Slide 2</span>
+    <span class="menu-item" data-slide="slide1">List</span>
+    <span class="menu-item" data-slide="slide2">Edit</span>
   </div>
 
   <div class="slide" id="slide1">
