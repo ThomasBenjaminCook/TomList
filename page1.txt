@@ -54,6 +54,9 @@
   </div>
 
   <div class="slide" id="slide1">
+  <label for="milk">Milk</label> <input type="done1" value="done">
+  <label for="bread">Bread</label> <input type="done2" value="done">
+  <label for="chocolate">Chocolate</label> <input type="done3" value="done">
   </div>
 
   <div class="slide" id="slide2">
