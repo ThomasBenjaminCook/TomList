@@ -56,9 +56,9 @@
   <div class="slide" id="slide1">
 
   <form>
-  <label for="milk">Milk</label> <input type="done1" value="done">
-  <label for="bread">Bread</label> <input type="done2" value="done">
-  <label for="chocolate">Chocolate</label> <input type="done3" value="done">
+  <label for="milk">Milk</label> <input type="submit" value="done"><br><br>
+  <label for="bread">Bread</label> <input type="submit" value="done"><br><br>
+  <label for="chocolate">Chocolate</label> <input type="submit" value="done"><br><br>
   </form>
   
   </div>
