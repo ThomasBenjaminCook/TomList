@@ -2,6 +2,10 @@
   <title>List</title>
   <style>
 
+    body {
+        padding: 0%;
+    }
+    
     #menu {
       background: #333;
       color: #fff;
@@ -34,7 +38,7 @@
       background-color: red;
       height: 45%;
       opacity: 0.33;
-      top: 45%;
+      top: 55%;
     }
 
   </style>
