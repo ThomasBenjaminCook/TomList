@@ -65,7 +65,7 @@
     <fieldset>
         <legend>Add Items</legend>
         <label for="fname">Item:</label> <input type="text" id="fname" name="fname"><br><br>
-        <input list="shop"> <datalist id="shop">
+        <label for="fname">Shop:</label> <input list="shop"> <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
         </datalist><br><br>
