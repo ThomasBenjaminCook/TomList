@@ -61,8 +61,19 @@
   <div class="slide" id="slide2">
 
     <div id="add">
-    Add Items</br>
-    <button>Submit</button>
+    <form>
+    <fieldset>
+        <legend>Add Items</legend>
+        <label for="fname">Name:</label><br>
+        <input type="text" id="fname" name="fname" value="John"><br>
+        <input list="shop">
+        <datalist id="shop">
+            <option value="Coles">
+            <option value="ALDI">
+        </datalist>
+        <input type="submit" value="Submit">
+    </fieldset>
+    </form>
     </div>
 
     <div id="remove">
