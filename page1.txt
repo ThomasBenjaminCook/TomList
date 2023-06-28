@@ -4,6 +4,7 @@
 
     body {
         padding: 0%;
+        margin: 0%;
     }
     
     #menu {
@@ -38,7 +39,7 @@
       background-color: red;
       height: 45%;
       opacity: 0.33;
-      top: 55%;
+      top: 57%;
     }
 
   </style>
