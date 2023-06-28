@@ -61,22 +61,35 @@
   <div class="slide" id="slide2">
 
     <div id="add">
+
     <form>
     <fieldset>
         <legend>Add Items</legend>
-        <label for="fname">Item:</label> <input type="text" id="fname" name="fname"><br><br>
-        <label for="fname">Shop:</label> <input list="shop"> <datalist id="shop">
+        <label for="itemin">Item:</label> <input type="text" id="fname" name="fname"><br><br>
+        <label for="shopin">Shop:</label> <input list="shop"> <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
         </datalist><br><br>
         <input type="submit" value="Submit">
     </fieldset>
     </form>
+
     </div>
 
     <div id="remove">
-    Remove Items</br>
-    <button>Remove</button>
+
+    <form>
+    <fieldset>
+        <legend>Remove Items</legend>
+        <label for="itemout">Item:</label> <input list="stuff"> <datalist id="stuff">
+            <option value="Milk">
+            <option value="Bread">
+            <option value="Chocolate">
+        </datalist><br><br>
+        <input type="submit" value="Remove">
+    </fieldset>
+    </form>
+
     </div>
 
   </div>
