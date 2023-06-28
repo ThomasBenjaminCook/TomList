@@ -1,1 +1,62 @@
-penis
+<head>
+  <title>jQuery Slide Menu Example</title>
+  <style>
+    /* CSS styles for the menu and slides */
+    #menu {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .slide {
+      display: none;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    #slide1 {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="menu">
+    <span class="menu-item" data-slide="slide1">Slide 1</span>
+    <span class="menu-item" data-slide="slide2">Slide 2</span>
+    <span class="menu-item" data-slide="slide3">Slide 3</span>
+  </div>
+
+  <div class="slide" id="slide1">
+    <h2>Slide 1</h2>
+    <p>This is the content of slide 1.</p>
+  </div>
+
+  <div class="slide" id="slide2">
+    <h2>Slide 2</h2>
+    <p>This is the content of slide 2.</p>
+  </div>
+
+  <div class="slide" id="slide3">
+    <h2>Slide 3</h2>
+    <p>This is the content of slide 3.</p>
+  </div>
+
+  <!-- Include jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Handle menu item click event
+      $('.menu-item').click(function() {
+        // Hide all slides
+        $('.slide').hide();
+
+        // Get the data-slide attribute value
+        var slideId = $(this).data('slide');
+
+        // Show the selected slide
+        $('#' + slideId).show();
+      });
+    });
+  </script>
+</body>
