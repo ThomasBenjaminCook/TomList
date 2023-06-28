@@ -12,8 +12,8 @@
 
     .slide {
       display: none;
-      padding: 20px;
       background: #f2f2f2;
+      height: 100vh;
     }
 
     #slide1 {
