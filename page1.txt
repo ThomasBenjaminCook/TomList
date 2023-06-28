@@ -29,8 +29,8 @@
     #add {
       position: absolute;
       text-align: center;
-      width: 100%;
-      height: 45%;
+      width: 97%;
+      height: 43.5%;
       background-color: rgba(50,255,10,0.3);
       padding: 1.5%;
     }
@@ -38,10 +38,10 @@
     #remove {
       position: absolute;
       text-align: center;
-      width: 100%;
+      width: 97%;
       background-color: rgba(255,50,10,0.3);
-      height: 45%;
-      top: 55%;
+      height: 43.5%;
+      top: 59.5%;
       padding: 1.5%;
     }
 
@@ -61,12 +61,12 @@
   <div class="slide" id="slide2">
 
     <div id="add">
-    Add Items
+    Add Items</br>
     <button>Submit</button>
     </div>
 
     <div id="remove">
-    Remove Items
+    Remove Items</br>
     <button>Remove</button>
     </div>
 
