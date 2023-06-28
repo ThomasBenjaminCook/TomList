@@ -14,6 +14,6 @@ with open(THIS_FOLDER / "page1.txt") as f:
     page1 = f.readlines()
 page1 = (" ").join(page1)
 
-@app.route("/data")
+@app.route("/")
 def data():
     return page1
