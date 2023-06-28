@@ -64,13 +64,11 @@
     <form>
     <fieldset>
         <legend>Add Items</legend>
-        <label for="fname">Name:</label><br>
-        <input type="text" id="fname" name="fname" value="John"><br>
-        <input list="shop">
-        <datalist id="shop">
+        <label for="fname">Item:</label> <input type="text" id="fname" name="fname"><br><br>
+        <input list="shop"> <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
-        </datalist>
+        </datalist><br><br>
         <input type="submit" value="Submit">
     </fieldset>
     </form>
