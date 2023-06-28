@@ -49,8 +49,8 @@
   </div>
 
   <div class="slide" id="slide2">
-    <div class="add">ghee</div>
-    <div class="remove">ghee</div>
+    <div id="add">ghee</div>
+    <div id="remove">ghee</div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
