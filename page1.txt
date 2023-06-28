@@ -54,8 +54,6 @@
   </div>
 
   <div class="slide" id="slide1">
-    <h2>List</h2>
-    <p>Balls</p>
   </div>
 
   <div class="slide" id="slide2">
