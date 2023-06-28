@@ -27,6 +27,7 @@
 
     #add {
       position: absolute;
+      text-align: center;
       width: 100%;
       height: 45%;
       background-color: rgba(50,255,10,0.3);
@@ -35,11 +36,12 @@
 
     #remove {
       position: absolute;
+      text-align: center;
       width: 100%;
       background-color: red;
       height: 45%;
       opacity: 0.33;
-      top: 57%;
+      top: 55%;
     }
 
   </style>
@@ -56,8 +58,8 @@
   </div>
 
   <div class="slide" id="slide2">
-    <div id="add">ghee</div>
-    <div id="remove">ghee</div>
+    <div id="add">Add Items</div>
+    <div id="remove">Remove Items</div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
