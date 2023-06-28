@@ -1,19 +1,11 @@
-import pandas
-import statistics
-import random
-from datetime import datetime, timedelta
-from flask import Flask, request, redirect, make_response
-from pathlib import Path
-from flask_sqlalchemy import SQLAlchemy
 
-THIS_FOLDER = Path(__file__).parent.resolve()
+# A very simple Flask Hello World app for you to get started with...
+
+from flask import Flask
 
 app = Flask(__name__)
 
-with open(THIS_FOLDER / "page1.txt") as f:
-    page1 = f.readlines()
-page1 = (" ").join(page1)
+@app.route('/')
+def hello_world():
+    return 'Hello from Flask!'
 
-@app.route("/data")
-def data():
-    return page1
