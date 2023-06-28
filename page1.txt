@@ -56,12 +56,28 @@
 
   <div class="slide" id="slide1">
 
+  <br>
+
   <form>
   <label for="milk">Milk</label> <input type="submit" value="done"><br><br>
   <label for="bread">Bread</label> <input type="submit" value="done"><br><br>
   <label for="chocolate">Chocolate</label> <input type="submit" value="done"><br><br>
   </form>
+
+  <br>
   
+  <form>
+  <fieldset>
+        <legend>Add Items</legend>
+        <label for="itemout">Item:</label> <input list="stuff"> <datalist id="stuff">
+            <option value="Milk">
+            <option value="Bread">
+            <option value="Chocolate">
+        </datalist><br><br>
+        <input type="submit" value="Add">
+  </fieldset>
+  </form>
+
   </div>
 
   <div class="slide" id="slide2">
