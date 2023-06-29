@@ -56,7 +56,7 @@ def data():
 
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
-    shopping_list = shopping_list_dataframe["item"]
+    shopping_list = shopping_list_dataframe["item"].to_list()
     shopping_list_indicies = shopping_list_dataframe.index.values
 
     first_layer = []
