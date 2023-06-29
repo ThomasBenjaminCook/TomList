@@ -1,14 +1,12 @@
-import pandas
+import pandas as pd
 import statistics
 import random
 from datetime import datetime, timedelta
 from flask import Flask, request, redirect, make_response
 from pathlib import Path
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 
 THIS_FOLDER = Path(__file__).parent.resolve()
-
-app = Flask(__name__)
 
 with open(THIS_FOLDER / "page1.txt") as f:
     page1 = f.readlines()
@@ -23,12 +21,34 @@ def stringinserter(tag,string,insertables):
             outputarray.append(insertables[x])
     return(("").join(outputarray))
 
+def dataframe_to_dict(dataframe, target_col_index,target_col_val):
+    dictionary = {}
+    count = 0
+    while count < len(dataframe[target_col_index].to_list()):
+        dictionary[dataframe[target_col_index].to_list()[count]] = dataframe[target_col_val].to_list()[count]
+        count = count + 1
+    return(dictionary)
+
+app = Flask(__name__)
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username="ThomasAppMaker",
+    password="P_R5nvjG5DV4Vd6",
+    hostname="ThomasAppMaker.mysql.pythonanywhere-services.com",
+    databasename="ThomasAppMaker$default",
+)
+engine = create_engine(SQLALCHEMY_DATABASE_URI)
+
 @app.route("/")
 def data():
 
-    all_items = ["milk","bread","cheese","chocolate","chia"]
-    shops = {"milk":"ALDI","bread":"ALDI","cheese":"ALDI","chia":"Coles","chocolate":"Coles"}
-    shopping_list = ["milk","chia","bread"]
+    shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
+    total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
+
+    dataframe_to_dict
+
+    all_items = total_list_dataframe["item"].to_list()
+    shops = dataframe_to_dict(total_list_dataframe,"item","shop")
+    shopping_list = shopping_list_dataframe["item"].to_list()
 
     first_layer = []
 
