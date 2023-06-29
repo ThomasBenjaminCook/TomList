@@ -68,12 +68,12 @@
   <form method="POST" action="/">
         <legend>Add Items</legend>
         <label for="itemout">Item:</label> 
-        {{ form.hidden_tag() }}
-        {{ form.itemer(class="form-control", list="stuff") }}
+        {{ kart_form.hidden_tag() }}
+        {{ kart_form.itemer(class="form-control", list="stuff") }}
         <datalist id="stuff">
             @
         </datalist><br><br>
-        {{ form.submit(class="btn btn-primary") }}
+        {{ kart_form.submit(class="btn btn-primary") }}
   </form>
 
   </div>

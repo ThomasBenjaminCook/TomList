@@ -31,7 +31,7 @@ def dataframe_to_dict(dataframe, target_col_index,target_col_val):
         count = count + 1
     return(dictionary)
 
-class MyForm(FlaskForm):
+class Kart(FlaskForm):
     itemer = StringField('stuff')
     submit = SubmitField('Submit')
 
@@ -60,9 +60,9 @@ def data():
     coles_string = " "
     ALDI_string = " "
 
-    form = MyForm()
-    if form.validate_on_submit():
-        selected_item = form.itemer.data
+    kart_form = Kart()
+    if kart_form.validate_on_submit():
+        selected_item = kart_form.itemer.data
         shopping_list.append(selected_item)
         next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
         shopping_list_dataframe.loc[next_index]=selected_item
@@ -85,4 +85,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), form=form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form)
