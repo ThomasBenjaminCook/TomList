@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from flask import Flask, request, redirect, make_response, render_template_string
 from pathlib import Path
 from sqlalchemy import create_engine
-from flask_wtf import FlaskForm, CSRFProtect
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 
 THIS_FOLDER = Path(__file__).parent.resolve()
@@ -37,7 +37,6 @@ class MyForm(FlaskForm):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
-csrf = CSRFProtect(app)
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="ThomasAppMaker",
     password="P_R5nvjG5DV4Vd6",
