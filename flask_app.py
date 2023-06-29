@@ -6,7 +6,7 @@ from flask import Flask, request, redirect, make_response
 from pathlib import Path
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
-from wtforms import StringField, FormField, FieldList, IntegerField, Form, Submitfield
+from wtforms import StringField, FormField, FieldList, IntegerField, Form
 from wtforms.validators import Optionalfrom, DataRequired
 
 THIS_FOLDER = Path(__file__).parent.resolve()
