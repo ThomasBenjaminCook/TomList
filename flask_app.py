@@ -64,7 +64,7 @@ def data():
     ALDI_string = " "
 
     kart_form = Kart()
-    if kart_form.validate_on_submit():
+    if (kart_form.validate_on_submit() and kart_form.submit.data):
         selected_item = kart_form.itemer.data
         shopping_list.append(selected_item)
         if(len(list(shopping_list_dataframe.index.values))>=1):
@@ -75,7 +75,7 @@ def data():
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
     remove_form = Remove()
-    if remove_form.validate_on_submit():
+    if (remove_form.validate_on_submit() and remove_form.submit.data):
         return("hi")
     
     for item in shopping_list:
