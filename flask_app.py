@@ -79,8 +79,8 @@ def data():
         return("hi")
     
     for item in shopping_list:
-        print(shops[item["item"]])
-        if(shops[item["item"]] == "ALDI"):
+        print(shops[item])
+        if(shops[item] == "ALDI"):
             weird_id = str(item.index.values[0])+"_ALDI"
             ALDI_string = ALDI_string + '{{ remove_form.submit2() }}</br></br>'
         if(shops[item] == "Coles"):
