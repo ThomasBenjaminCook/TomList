@@ -58,7 +58,7 @@
 
   <br>
 
-  <form method="POST" action="/">
+  <form method="POST">
     {{ remove_form.hidden_tag() }}
     ALDI<br><br>
     @
@@ -66,7 +66,7 @@
     @
   </form>
   
-  <form method="POST" action="/">
+  <form method="POST">
         <legend>Add Items</legend>
         <label for="itemout">Item:</label> 
         {{ kart_form.hidden_tag() }}
