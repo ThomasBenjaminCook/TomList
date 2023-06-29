@@ -85,10 +85,10 @@ def data():
         item = shopping_list[count]
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
-            weird_id = str(target_index)+"_ALDI"
+            weird_id = str(target_index)
             ALDI_string = ALDI_string + '{{ remove_form.submit2(id='+weird_id+') }}</br></br>'
         if(shops[item] == "Coles"):
-            weird_id = str(target_index)+"_Coles"
+            weird_id = str(target_index)
             coles_string = coles_string + '{{ remove_form.submit2(id='+weird_id+') }}</br></br>'
         count = count + 1
 
