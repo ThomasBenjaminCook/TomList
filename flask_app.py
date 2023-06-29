@@ -64,6 +64,9 @@ def data():
     if form.validate_on_submit():
         selected_item = form.itemer.data
         shopping_list.append(selected_item)
+        next_index = int(shopping_list_dataframe["itemID"].to_list()[-1])+1
+        print(shopping_list_dataframe)
+        print(next_index)
 
     for item in shopping_list:
         if(shops[item] == "ALDI"):
