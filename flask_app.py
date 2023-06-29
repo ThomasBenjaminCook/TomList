@@ -75,10 +75,12 @@ def data():
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
     remove_form = Remove()
-
+    if remove_form.validate_on_submit():
+        return("hi")
+    
     for item in shopping_list:
         if(shops[item] == "ALDI"):
-            ALDI_string = ALDI_string + '{{ remove_form.submit(class="btn btn-primary") }}</br></br>'
+            ALDI_string = ALDI_string + '{{ remove_form.submit() }}</br></br>'
         else:
             coles_string = coles_string + '{{ remove_form.submit(class="btn btn-primary") }}</br></br>'
 
