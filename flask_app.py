@@ -57,6 +57,7 @@ def data():
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
     shopping_list = shopping_list_dataframe["item"]
+    shopping_list_indicies = shopping_list_dataframe.index.values
 
     first_layer = []
 
@@ -78,14 +79,18 @@ def data():
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
         return("hi")
     
-    for item in shopping_list:
-        print(shops[item])
+    count = 0
+    while count < len(shopping_list):
+        item = shopping_list[count]
+        target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = str(item.index.values[0])+"_ALDI"
             ALDI_string = ALDI_string + '{{ remove_form.submit2() }}</br></br>'
         if(shops[item] == "Coles"):
             weird_id = str(item.index.values[0])+"_Coles"
             coles_string = coles_string + '{{ remove_form.submit2() }}</br></br>'
+        print(weird_id)
+        count = count + 1
 
     first_layer.append(ALDI_string)
     first_layer.append(coles_string)
