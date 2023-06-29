@@ -67,6 +67,7 @@ def data():
     kart_form = Kart()
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
         selected_item = kart_form.itemer.data
+        print(selected_item)
         shopping_list.append(selected_item)
         if(len(list(shopping_list_dataframe.index.values))>=1):
             next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
@@ -85,10 +86,10 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = str(target_index)+"_ALDI"
-            ALDI_string = ALDI_string + '{{ remove_form.submit2() }}</br></br>'
+            ALDI_string = ALDI_string + '{{ remove_form.submit2(id='+weird_id+') }}</br></br>'
         if(shops[item] == "Coles"):
             weird_id = str(target_index)+"_Coles"
-            coles_string = coles_string + '{{ remove_form.submit2() }}</br></br>'
+            coles_string = coles_string + '{{ remove_form.submit2(id='+weird_id+') }}</br></br>'
         count = count + 1
 
     first_layer.append(ALDI_string)
