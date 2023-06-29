@@ -64,7 +64,10 @@ def data():
     if kart_form.validate_on_submit():
         selected_item = kart_form.itemer.data
         shopping_list.append(selected_item)
-        next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
+        if(len(list(shopping_list_dataframe.index.values)[-1])>=1):
+            next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
+        else:
+            next_index = 0
         shopping_list_dataframe.loc[next_index]=selected_item
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
