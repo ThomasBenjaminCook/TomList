@@ -73,6 +73,7 @@ def data():
         else:
             next_index = 0
         shopping_list_dataframe.loc[next_index]=selected_item
+        shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
     remove_form = Remove()
