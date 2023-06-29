@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 from flask import Flask, request, redirect, make_response
 from pathlib import Path
 from sqlalchemy import create_engine
+from flask_wtf import FlaskForm
+from wtforms import StringField, FormField, FieldList, IntegerField, Form, Submitfield
+from wtforms.validators import Optionalfrom, DataRequired
 
 THIS_FOLDER = Path(__file__).parent.resolve()
 
@@ -29,6 +32,10 @@ def dataframe_to_dict(dataframe, target_col_index,target_col_val):
         count = count + 1
     return(dictionary)
 
+class MyForm(FlaskForm):
+    itemer = StringField('Fruit', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
 app = Flask(__name__)
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="ThomasAppMaker",
@@ -38,13 +45,16 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
 )
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
-@app.route("/")
+@app.route("/", methods = ["GET","POST"])
 def data():
+
+    form = MyForm()
+    if form.validate_on_submit():
+        stuffer = form.itemer.data
+        return f"You selected: {stuffer}"
 
     shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
-
-    dataframe_to_dict
 
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
@@ -73,3 +83,6 @@ def data():
     first_layer.append(option_string)
 
     return (stringinserter("@",page1,first_layer))
+
+
+#df.to_sql("emissions_database", con=engine, if_exists="replace")

@@ -65,13 +65,17 @@
     @
   </form>
   
-  <form>
+  <form method="POST" action="/">
   <fieldset>
         <legend>Add Items</legend>
-        <label for="itemout">Item:</label> <input list="stuff"> <datalist id="stuff">
+        <label for="itemout">Item:</label> <input list="stuff"> 
+        {{ form.hidden_tag() }}
+        {{ form.itemer.label }}
+        {{ form.itemer(class="form-control", list="stuff") }}
+        <datalist id="stuff">
             @
         </datalist><br><br>
-        <input type="submit" value="Add">
+        {{ form.submit(class="btn btn-primary") }}
   </fieldset>
   </form>
 
