@@ -77,7 +77,7 @@ def data():
 
     remove_form = Remove()
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
-        return("hi")
+        return(remove_form.id)
     
     count = 0
     while count < len(shopping_list):
@@ -85,11 +85,10 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = str(target_index)+"_ALDI"
-            ALDI_string = ALDI_string + '{{ remove_form.submit2() }}</br></br>'
+            ALDI_string = ALDI_string + '{{ remove_form.submit2(id=weird_id) }}</br></br>'
         if(shops[item] == "Coles"):
             weird_id = str(target_index)+"_Coles"
-            coles_string = coles_string + '{{ remove_form.submit2() }}</br></br>'
-        print(weird_id)
+            coles_string = coles_string + '{{ remove_form.submit2(id=weird_id) }}</br></br>'
         count = count + 1
 
     first_layer.append(ALDI_string)
