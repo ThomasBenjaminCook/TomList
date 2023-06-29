@@ -48,11 +48,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI)
 @app.route("/", methods = ["GET","POST"])
 def data():
 
-    form = MyForm()
-    if form.validate_on_submit():
-        stuffer = form.itemer.data
-        return f"You selected: {stuffer}"
-
     shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
 
@@ -64,6 +59,11 @@ def data():
 
     coles_string = " "
     ALDI_string = " "
+
+    form = MyForm()
+    if form.validate_on_submit():
+        selected_item = form.itemer.data
+        return f"You selected: {selected_item}"
 
     for item in shopping_list:
         if(shops[item] == "ALDI"):
