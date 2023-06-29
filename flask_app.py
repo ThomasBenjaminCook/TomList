@@ -2,12 +2,11 @@ import pandas as pd
 import statistics
 import random
 from datetime import datetime, timedelta
-from flask import Flask, request, redirect, make_response
+from flask import Flask, request, redirect, make_response, render_template_string
 from pathlib import Path
 from sqlalchemy import create_engine
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
 
 THIS_FOLDER = Path(__file__).parent.resolve()
 
@@ -33,11 +32,12 @@ def dataframe_to_dict(dataframe, target_col_index,target_col_val):
     return(dictionary)
 
 class MyForm(FlaskForm):
-    itemer = StringField('Fruit', validators=[DataRequired()])
+    itemer = StringField('stuff')
     submit = SubmitField('Submit')
 
 app = Flask(__name__)
-app.secret_key = '4567656gdyhfbgvryhedbf#$%^&%$#%^&'
+app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
+csrf = CSRFProtect(app)
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="ThomasAppMaker",
     password="P_R5nvjG5DV4Vd6",
@@ -83,7 +83,7 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return (stringinserter("@",page1,first_layer))
+    return render_template_string(stringinserter("@",page1,first_layer))
 
 
 #df.to_sql("emissions_database", con=engine, if_exists="replace")
