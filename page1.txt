@@ -60,19 +60,16 @@
 
   <form>
     ALDI<br><br>
-    <input type="submit" value="milk"><br><br>
-    <input type="submit" value="bread"><br><br>
+    @
     Coles<br><br>
-    <input type="submit" value="chocolate"><br><br>
+    @
   </form>
   
   <form>
   <fieldset>
         <legend>Add Items</legend>
         <label for="itemout">Item:</label> <input list="stuff"> <datalist id="stuff">
-            <option value="milk">
-            <option value="bread">
-            <option value="chocolate">
+            @
         </datalist><br><br>
         <input type="submit" value="Add">
   </fieldset>
@@ -104,9 +101,7 @@
     <fieldset>
         <legend>Remove Items</legend>
         <label for="itemout">Item:</label> <input list="stuff"> <datalist id="stuff">
-            <option value="milk">
-            <option value="bread">
-            <option value="chocolate">
+          @
         </datalist><br><br>
         <input type="submit" value="Remove">
     </fieldset>
