@@ -35,6 +35,9 @@ class Kart(FlaskForm):
     itemer = StringField('stuff')
     submit = SubmitField('Submit')
 
+class Remove(FlaskForm):
+    submit = SubmitField('Done')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -71,11 +74,13 @@ def data():
         shopping_list_dataframe.loc[next_index]=selected_item
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
+    remove_form = Remove()
+
     for item in shopping_list:
         if(shops[item] == "ALDI"):
-            ALDI_string = ALDI_string + '<input type="submit" value='+item+'><br><br>'
+            ALDI_string = ALDI_string + '{{ remove_form.submit(class="btn btn-primary") }}'
         else:
-            coles_string = coles_string + '<input type="submit" value='+item+'><br><br>'
+            coles_string = coles_string + '{{ remove_form.submit(class="btn btn-primary") }}'
 
     first_layer.append(ALDI_string)
     first_layer.append(coles_string)
@@ -88,4 +93,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, remove_form=remove_form)
