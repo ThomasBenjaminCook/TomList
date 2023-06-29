@@ -33,10 +33,10 @@ def dataframe_to_dict(dataframe, target_col_index,target_col_val):
 
 class Kart(FlaskForm):
     itemer = StringField()
-    submit = SubmitField('Submit')
+    submit1 = SubmitField('Submit')
 
 class Remove(FlaskForm):
-    submit = SubmitField('Done')
+    submit2 = SubmitField('Done')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
@@ -64,7 +64,7 @@ def data():
     ALDI_string = " "
 
     kart_form = Kart()
-    if (kart_form.validate_on_submit() and kart_form.submit.data):
+    if (kart_form.validate_on_submit() and kart_form.submit1.data):
         selected_item = kart_form.itemer.data
         shopping_list.append(selected_item)
         if(len(list(shopping_list_dataframe.index.values))>=1):
@@ -75,14 +75,14 @@ def data():
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
     remove_form = Remove()
-    if (remove_form.validate_on_submit() and remove_form.submit.data):
+    if (remove_form.validate_on_submit() and remove_form.submit2.data):
         return("hi")
     
     for item in shopping_list:
         if(shops[item] == "ALDI"):
-            ALDI_string = ALDI_string + '{{ remove_form.submit() }}</br></br>'
+            ALDI_string = ALDI_string + '{{ remove_form.submit2() }}</br></br>'
         else:
-            coles_string = coles_string + '{{ remove_form.submit() }}</br></br>'
+            coles_string = coles_string + '{{ remove_form.submit2() }}</br></br>'
 
     first_layer.append(ALDI_string)
     first_layer.append(coles_string)
