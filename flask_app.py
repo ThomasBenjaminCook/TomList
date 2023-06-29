@@ -37,6 +37,7 @@ class MyForm(FlaskForm):
     submit = SubmitField('Submit')
 
 app = Flask(__name__)
+app.secret_key = '4567656gdyhfbgvryhedbf#$%^&%$#%^&'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="ThomasAppMaker",
     password="P_R5nvjG5DV4Vd6",
