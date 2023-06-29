@@ -67,9 +67,8 @@
   
   <form method="POST" action="/">
         <legend>Add Items</legend>
-        <label for="itemout">Item:</label> <input list="stuff"> 
+        <label for="itemout">Item:</label> 
         {{ form.hidden_tag() }}
-        {{ form.itemer.label }}
         {{ form.itemer(class="form-control", list="stuff") }}
         <datalist id="stuff">
             @
