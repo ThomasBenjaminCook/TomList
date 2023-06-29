@@ -65,8 +65,8 @@ def data():
         selected_item = form.itemer.data
         shopping_list.append(selected_item)
         next_index = int(shopping_list_dataframe["itemID"].to_list()[-1])+1
-        print(shopping_list_dataframe)
-        print(next_index)
+        shopping_list_dataframe[next_index]=selected_item
+        shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
     for item in shopping_list:
         if(shops[item] == "ALDI"):
@@ -86,6 +86,3 @@ def data():
     first_layer.append(option_string)
 
     return render_template_string(stringinserter("@",page1,first_layer), form=form)
-
-
-#df.to_sql("emissions_database", con=engine, if_exists="replace")
