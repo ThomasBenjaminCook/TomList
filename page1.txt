@@ -59,9 +59,9 @@
   <br>
 
   <form>
-  <label for="milk">Milk</label> <input type="submit" value="done"><br><br>
-  <label for="bread">Bread</label> <input type="submit" value="done"><br><br>
-  <label for="chocolate">Chocolate</label> <input type="submit" value="done"><br><br>
+    <input type="submit" value="done1"><br><br>
+    <input type="submit" value="done2"><br><br>
+    <input type="submit" value="done3"><br><br>
   </form>
 
   <br>
