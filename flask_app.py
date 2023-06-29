@@ -36,7 +36,7 @@ class Kart(FlaskForm):
     submit1 = SubmitField('Submit')
 
 class Remove(FlaskForm):
-    submit2 = SubmitField("Done", name="usern")
+    submit2 = SubmitField("Done")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
@@ -78,7 +78,7 @@ def data():
 
     remove_form = Remove()
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
-        return(remove_form.name)
+        return(remove_form.description)
     
     count = 0
     while count < len(shopping_list):
@@ -86,10 +86,10 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = str(target_index)
-            ALDI_string = ALDI_string + '{{ remove_form.submit2(name='+weird_id+') }}</br></br>'
+            ALDI_string = ALDI_string + '{{ remove_form.submit2(description='+weird_id+') }}</br></br>'
         if(shops[item] == "Coles"):
             weird_id = str(target_index)
-            coles_string = coles_string + '{{ remove_form.submit2(name='+weird_id+') }}</br></br>'
+            coles_string = coles_string + '{{ remove_form.submit2(description='+weird_id+') }}</br></br>'
         count = count + 1
 
     first_layer.append(ALDI_string)
