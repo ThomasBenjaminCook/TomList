@@ -78,7 +78,7 @@ def data():
 
     remove_form = Remove()
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
-        return(remove_form.description)
+        return(remove_form.submit2.description)
     
     count = 0
     while count < len(shopping_list):
