@@ -26,9 +26,9 @@ def stringinserter(tag,string,insertables):
 @app.route("/")
 def data():
 
-    all_items = ["milk","bread","cheese","chocolate"]
+    all_items = ["milk","bread","cheese","chocolate","chia"]
     shops = {"milk":"ALDI","bread":"ALDI","cheese":"ALDI","chia":"Coles","chocolate":"Coles"}
-    shopping_list = ["milk","bread","chia"]
+    shopping_list = ["milk","chia","bread"]
 
     first_layer = []
 
