@@ -32,7 +32,7 @@ def dataframe_to_dict(dataframe, target_col_index,target_col_val):
     return(dictionary)
 
 class Kart(FlaskForm):
-    itemer = StringField('stuff')
+    itemer = StringField()
     submit = SubmitField('Submit')
 
 class Remove(FlaskForm):
@@ -78,9 +78,9 @@ def data():
 
     for item in shopping_list:
         if(shops[item] == "ALDI"):
-            ALDI_string = ALDI_string + '{{ remove_form.submit(class="btn btn-primary") }}'
+            ALDI_string = ALDI_string + '{{ remove_form.submit(class="btn btn-primary") }}</br></br>'
         else:
-            coles_string = coles_string + '{{ remove_form.submit(class="btn btn-primary") }}'
+            coles_string = coles_string + '{{ remove_form.submit(class="btn btn-primary") }}</br></br>'
 
     first_layer.append(ALDI_string)
     first_layer.append(coles_string)
