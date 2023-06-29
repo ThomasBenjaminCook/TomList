@@ -56,7 +56,7 @@ def data():
 
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
-    shopping_list = shopping_list_dataframe["item"].to_list()
+    shopping_list = shopping_list_dataframe["item"]
 
     first_layer = []
 
@@ -79,9 +79,12 @@ def data():
         return("hi")
     
     for item in shopping_list:
-        if(shops[item] == "ALDI"):
+        print(shops[item["item"]])
+        if(shops[item["item"]] == "ALDI"):
+            weird_id = str(item.index.values[0])+"_ALDI"
             ALDI_string = ALDI_string + '{{ remove_form.submit2() }}</br></br>'
-        else:
+        if(shops[item] == "Coles"):
+            weird_id = str(item.index.values[0])+"_Coles"
             coles_string = coles_string + '{{ remove_form.submit2() }}</br></br>'
 
     first_layer.append(ALDI_string)
