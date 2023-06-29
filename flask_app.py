@@ -82,7 +82,7 @@ def data():
         if(shops[item] == "ALDI"):
             ALDI_string = ALDI_string + '{{ remove_form.submit() }}</br></br>'
         else:
-            coles_string = coles_string + '{{ remove_form.submit(class="btn btn-primary") }}</br></br>'
+            coles_string = coles_string + '{{ remove_form.submit() }}</br></br>'
 
     first_layer.append(ALDI_string)
     first_layer.append(coles_string)

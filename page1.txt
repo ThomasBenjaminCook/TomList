@@ -58,7 +58,8 @@
 
   <br>
 
-  <form>
+  <form method="POST" action="/">
+    {{ remove_form.hidden_tag() }}
     ALDI<br><br>
     @
     Coles<br><br>
