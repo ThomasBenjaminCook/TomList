@@ -64,7 +64,7 @@ def data():
     if kart_form.validate_on_submit():
         selected_item = kart_form.itemer.data
         shopping_list.append(selected_item)
-        if(len(list(shopping_list_dataframe.index.values)[-1])>=1):
+        if(len(list(shopping_list_dataframe.index.values))>=1):
             next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
         else:
             next_index = 0
