@@ -63,7 +63,7 @@ def data():
     form = MyForm()
     if form.validate_on_submit():
         selected_item = form.itemer.data
-        return f"You selected: {selected_item}"
+        shopping_list.append(selected_item)
 
     for item in shopping_list:
         if(shops[item] == "ALDI"):
