@@ -82,7 +82,7 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer))
+    return render_template_string(stringinserter("@",page1,first_layer), form=form)
 
 
 #df.to_sql("emissions_database", con=engine, if_exists="replace")
