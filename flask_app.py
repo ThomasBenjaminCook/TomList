@@ -57,7 +57,7 @@ def data():
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
     shopping_list = shopping_list_dataframe["item"].to_list()
-    shopping_list_indicies = shopping_list_dataframe.index.values
+    shopping_list_indicies = list(shopping_list_dataframe.index.values)
 
     first_layer = []
 
@@ -67,7 +67,6 @@ def data():
     kart_form = Kart()
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
         selected_item = kart_form.itemer.data
-        print(selected_item)
         shopping_list.append(selected_item)
         if(len(list(shopping_list_dataframe.index.values))>=1):
             next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
