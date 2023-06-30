@@ -97,7 +97,7 @@ def data():
 
     remove_form = Remover()
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
-        return(add_form.itemerem.data)
+        return(remove_form.itemerem.data)
 
     weird_ids = []
     count = 0
