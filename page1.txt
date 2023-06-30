@@ -82,7 +82,7 @@
 
     <div id="add">
 
-    <form>
+    <form method="POST">
     <fieldset>
         <legend>Add Items</legend>
         <label for="itemin">Item:</label> {{ add_form.hidden_tag() }} {{ add_form.itemire() }}<br><br>
