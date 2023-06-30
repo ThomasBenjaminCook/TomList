@@ -83,20 +83,20 @@ def data():
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
         return(remove_form.strange)
     
+    aldiobjects = []
+    colesobjects = []
+
     count = 0
     while count < len(shopping_list):
         item = shopping_list[count]
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = "ALDI_"+str(target_index)
-            ALDI_string = ALDI_string + "{{ remove_form.submit2() }}</br></br>"
+            aldiobjects.append(Remove(strange = weird_id))
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
-            coles_string = coles_string + "{{ remove_form.submit2() }}</br></br>"
+            colesobjects.append(Remove(strange = weird_id))
         count = count + 1
-
-    first_layer.append(ALDI_string)
-    first_layer.append(coles_string)
 
     option_string = " "
 
@@ -106,4 +106,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, remove_form=remove_form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, aldi=aldiobjects, coles=colesobjects)
