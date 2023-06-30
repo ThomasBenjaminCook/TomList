@@ -98,7 +98,7 @@
 
     <div id="remove">
 
-    <form>
+    <form method="POST">
     <fieldset>
         <legend>Remove Items</legend>
         <label for="itemout">Item:</label> {{ remove_form.hidden_tag() }} {{ remove_form.itemerem(class="form-control", list="things") }} <datalist id="things">
