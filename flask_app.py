@@ -69,6 +69,15 @@ def data():
         shopping_list_dataframe.loc[next_index]=selected_item
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
+
+    if request.method == "POST":
+        count = 0
+        while count < len(shopping_list):
+            weird_id = weird_ids[count]
+            item = shopping_list[count]
+            if(request.form.get(weird_id)):
+                return(weird_id)
+            count = count + 1
     
     aldistring = " "
     colesstring = " "
@@ -97,14 +106,5 @@ def data():
 
     first_layer.append(option_string)
     first_layer.append(option_string)
-
-    if request.method == "POST":
-        count = 0
-        while count < len(shopping_list):
-            weird_id = weird_ids[count]
-            item = shopping_list[count]
-            if(request.form.get(weird_id)):
-                return(weird_id)
-            count = count + 1
 
     return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form)
