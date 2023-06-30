@@ -36,9 +36,9 @@ class Kart(FlaskForm):
     submit1 = SubmitField('Submit')
 
 class Remove(FlaskForm):
-    submit2 = SubmitField("Done")
     def __init__(self,strange):
         self.strange = strange
+    submit2 = SubmitField("Done")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
