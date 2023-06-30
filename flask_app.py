@@ -36,8 +36,9 @@ class Kart(FlaskForm):
     submit1 = SubmitField('Submit')
 
 class Remove(FlaskForm):
-    def __init__(self,strange):
+    def __init__(self,strange=None,*args, **kwargs):
         self.strange = strange
+        super(Remove, self).__init__(*args, **kwargs)
     submit2 = SubmitField("Done")
 
 app = Flask(__name__)
