@@ -90,8 +90,8 @@ def data():
         next_index = get_next_index(total_list_dataframe)
         row = pd.DataFrame({"itemID": next_index, "item": newer_item, "shop" : corresponding_shop},index=[next_index])
         total_list_dataframe = pd.concat([total_list_dataframe,row], axis=0)
-        total_list_dataframe=total_list_dataframe.set_index('itemID')
-        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace")
+        total_list_dataframe.set_index('itemID', inplace=True)
+        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
         all_items = total_list_dataframe["item"].to_list()
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
 
@@ -99,8 +99,8 @@ def data():
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
         print(total_list_dataframe[total_list_dataframe["item"] == remove_form.itemerem.data])
         total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == remove_form.itemerem.data].index.values, inplace=True)
-        total_list_dataframe=total_list_dataframe.set_index('itemID')
-        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace")
+        total_list_dataframe.set_index('itemID', inplace=True)
+        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
         all_items = total_list_dataframe["item"].to_list()
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
 
