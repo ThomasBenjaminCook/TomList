@@ -84,7 +84,7 @@ def data():
         newer_item = add_form.itemire.data
         corresponding_shop = add_form.shopper.data
         next_index = get_next_index(total_list_dataframe)
-        row = total_list_dataframe.iloc[0]
+        row = total_list_dataframe.iloc[1]
         row["item"] = newer_item
         row["shop"] = corresponding_shop
         total_list_dataframe.loc[next_index] = row
