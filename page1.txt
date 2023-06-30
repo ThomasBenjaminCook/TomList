@@ -101,10 +101,10 @@
     <form>
     <fieldset>
         <legend>Remove Items</legend>
-        <label for="itemout">Item:</label> <input list="stuff"> <datalist id="stuff">
+        <label for="itemout">Item:</label> {{ remove_form.hidden_tag() }} {{ remove_form.itemerem(class="form-control", list="things") }} <datalist id="things">
           @
         </datalist><br><br>
-        <input type="submit" value="Remove">
+        {{ remove_form.submit3() }}
     </fieldset>
     </form>
 

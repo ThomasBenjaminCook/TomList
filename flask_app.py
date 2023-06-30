@@ -47,6 +47,10 @@ class Adder(FlaskForm):
     shopper = StringField()
     submit2 = SubmitField('Submit')
 
+class Remover(FlaskForm):
+    itemerem = StringField()
+    submit3 = SubmitField('Submit')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -90,6 +94,10 @@ def data():
         total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace")
         all_items = total_list_dataframe["item"].to_list()
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
+
+    remove_form = Remover()
+    if (kart_form.validate_on_submit() and kart_form.submit3.data):
+        return(add_form.itemerem.data)
 
     weird_ids = []
     count = 0
@@ -138,4 +146,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form)
