@@ -31,6 +31,13 @@ def dataframe_to_dict(dataframe, target_col_index,target_col_val):
         count = count + 1
     return(dictionary)
 
+def get_next_index(dataframe):
+    if(len(list(dataframe.index.values))>=1):
+        next_index = int(list(dataframe.index.values)[-1])+1
+    else:
+        next_index = 0
+    return(next_index)
+
 class Kart(FlaskForm):
     itemer = StringField()
     submit1 = SubmitField('Submit')
@@ -67,17 +74,20 @@ def data():
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
         selected_item = kart_form.itemer.data
         shopping_list.append(selected_item)
-        if(len(list(shopping_list_dataframe.index.values))>=1):
-            next_index = int(list(shopping_list_dataframe.index.values)[-1])+1
-        else:
-            next_index = 0
+        next_index = get_next_index(shopping_list_dataframe)
         shopping_list_dataframe.loc[next_index]=selected_item
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
     
     add_form = Adder()
     if (add_form.validate_on_submit() and add_form.submit2.data):
-        return("Cock")
+        newer_item = add_form.itemire.data
+        corresponding_shop = add_form.shopper.data
+        next_index = get_next_index(total_list_dataframe)
+        total_list_dataframe = total_list_dataframe.append(pd.DataFrame([newer_item,corresponding_shop],index=[next_index],columns=total_list_dataframe.columns))
+        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace")
+        all_items = total_list_dataframe["item"].to_list()
+        shops = dataframe_to_dict(total_list_dataframe,"item","shop")
 
     weird_ids = []
     count = 0
