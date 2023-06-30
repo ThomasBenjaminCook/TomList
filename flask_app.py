@@ -103,7 +103,7 @@ def data():
         weird_id = weird_ids[count]
         item = shopping_list[count]
         while count < len(shopping_list):
-            if(request.form.get(weird_id) == item):
+            if(request.form.get(weird_id)):
                 return(weird_id)
             count = count + 1
 
