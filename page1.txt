@@ -60,15 +60,9 @@
 
   <form method="POST">
     ALDI<br><br>
-    {% for aldiitem in aldi %}
-        {{ aldiitem.hidden_tag() }}
-        {{ aldiitem.submit2() }} </br></br>
-    {% endfor %}
+      @
     Coles<br><br>
-    {% for colesitem in coles %}
-        {{ colesitem.hidden_tag() }}
-        {{ colesitem.submit2() }}</br></br>
-    {% endfor %}
+      @
   </form>
   
   <form method="POST">

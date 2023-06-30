@@ -35,12 +35,6 @@ class Kart(FlaskForm):
     itemer = StringField()
     submit1 = SubmitField('Submit')
 
-class Remove(FlaskForm):
-    def __init__(self,strange=None,*args, **kwargs):
-        self.strange = strange
-        super(Remove, self).__init__(*args, **kwargs)
-    submit2 = SubmitField("Done")
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -76,8 +70,8 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
     
-    aldiobjects = []
-    colesobjects = []
+    aldistring = " "
+    colesstring = " "
 
     count = 0
     while count < len(shopping_list):
@@ -85,18 +79,14 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = "ALDI_"+str(target_index)
-            aldiobjects.append(Remove(strange = weird_id))
+            aldistring = aldistring + '<input type="submit" value="'+item+'" name="'+weird_id+'"/></br></br>'
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
-            colesobjects.append(Remove(strange = weird_id))
+            colesstring = colesstring + '<input type="submit" value="'+item+'" name="'+weird_id+'"/></br></br>'
         count = count + 1
 
-    for object in aldiobjects:
-        if (object.validate_on_submit() and object.submit2.data):
-            return(object.strange)
-    for object in colesobjects:
-        if (object.validate_on_submit() and object.submit2.data):
-            return(object.strange)
+    first_layer.append(aldistring)
+    first_layer.append(colesstring)
 
     option_string = " "
 
@@ -106,4 +96,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, aldi=aldiobjects, coles=colesobjects)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form)
