@@ -100,10 +100,9 @@ def data():
 
     if request.method == "POST":
         count = 0
-        weird_id = weird_ids[count]
-        item = shopping_list[count]
         while count < len(shopping_list):
-            print(weird_id)
+            weird_id = weird_ids[count]
+            item = shopping_list[count]
             if(request.form.get(weird_id)):
                 return(weird_id)
             count = count + 1
