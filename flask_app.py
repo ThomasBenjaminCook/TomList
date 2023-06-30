@@ -69,6 +69,18 @@ def data():
         shopping_list_dataframe.loc[next_index]=selected_item
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
+    
+    weird_ids = []
+    count = 0
+    while count < len(shopping_list):
+        item = shopping_list[count]
+        target_index = shopping_list_indicies[count]
+        if(shops[item] == "ALDI"):
+            weird_id = "ALDI_"+str(target_index)
+        if(shops[item] == "Coles"):
+            weird_id = "Coles_"+str(target_index)
+        weird_ids.append(weird_id)
+        count = count + 1
 
     if request.method == "POST":
         count = 0
@@ -78,22 +90,17 @@ def data():
             if(request.form.get(weird_id)):
                 return(weird_id)
             count = count + 1
-    
+
     aldistring = " "
     colesstring = " "
-    weird_ids = []
-
     count = 0
     while count < len(shopping_list):
         item = shopping_list[count]
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
-            weird_id = "ALDI_"+str(target_index)
-            aldistring = aldistring + '<input type="submit" value="'+item+'" name="'+weird_id+'"/></br></br>'
+            aldistring = aldistring + '<input type="submit" value="'+item+'" name="'+weird_ids[count]+'"/></br></br>'
         if(shops[item] == "Coles"):
-            weird_id = "Coles_"+str(target_index)
-            colesstring = colesstring + '<input type="submit" value="'+item+'" name="'+weird_id+'"/></br></br>'
-        weird_ids.append(weird_id)
+            colesstring = colesstring + '<input type="submit" value="'+item+'" name="'+weird_ids[count]+'"/></br></br>'
         count = count + 1
 
     first_layer.append(aldistring)
