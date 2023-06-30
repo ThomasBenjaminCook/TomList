@@ -84,7 +84,7 @@ def data():
         newer_item = add_form.itemire.data
         corresponding_shop = add_form.shopper.data
         next_index = get_next_index(total_list_dataframe)
-        row = pd.DataFrame({"itemID": [next_index], "item": [newer_item], "shop" : [corresponding_shop]})
+        row = pd.DataFrame({"itemID": next_index, "item": newer_item, "shop" : corresponding_shop},index=[next_index])
         total_list_dataframe = pd.concat([total_list_dataframe,row], axis=0)
         total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace")
         all_items = total_list_dataframe["item"].to_list()
