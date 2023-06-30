@@ -59,7 +59,6 @@
   <br>
 
   <form method="POST">
-    {{ remove_form.hidden_tag() }}
     ALDI<br><br>
     {% for aldiitem in aldi %}
         {{ aldiitem.submit2() }}
