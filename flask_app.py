@@ -38,8 +38,8 @@ class Kart(FlaskForm):
 class Remove(FlaskForm):
     def __init__(self,strange=None,*args, **kwargs):
         self.strange = strange
+        self.submit2 = SubmitField("Done")
         super(Remove, self).__init__(*args, **kwargs)
-    submit2 = SubmitField("Done")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
@@ -63,9 +63,6 @@ def data():
     shopping_list_indicies = list(shopping_list_dataframe.index.values)
 
     first_layer = []
-
-    coles_string = " "
-    ALDI_string = " "
 
     kart_form = Kart()
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
@@ -92,7 +89,6 @@ def data():
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
             colesobjects.append(Remove(strange = weird_id))
-        print(weird_id)
         count = count + 1
 
     for object in aldiobjects:
