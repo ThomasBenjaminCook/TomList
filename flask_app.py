@@ -89,11 +89,10 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = "ALDI_"+str(target_index)
-            #ALDI_string = ALDI_string + "{% set specific_remove = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
-            ALDI_string = ALDI_string + "{% set specific_remove = remove_form.update({'strange': '"+weird_id+"'}) %} {{ remove_form.submit2() }}</br></br>"
+            ALDI_string = ALDI_string + "{% set _ = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
-            #coles_string = coles_string + "{% set specific_remove = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
+            coles_string = coles_string + "{% set _ = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
         count = count + 1
 
     first_layer.append(ALDI_string)
