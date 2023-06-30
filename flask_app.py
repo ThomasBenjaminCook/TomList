@@ -88,7 +88,10 @@ def data():
             weird_id = weird_ids[count]
             item = shopping_list[count]
             if(request.form.get(weird_id)):
-                return(shopping_list_dataframe.loc[int(weird_id.split("_")[-1])])
+                shopping_list_dataframe.drop([int(weird_id.split("_")[-1])], axis=0, inplace=True)
+                shopping_list = shopping_list_dataframe["item"].to_list()
+                shopping_list_indicies = list(shopping_list_dataframe.index.values)
+                shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
             count = count + 1
 
     aldistring = " "
