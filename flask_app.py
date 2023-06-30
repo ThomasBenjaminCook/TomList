@@ -38,7 +38,8 @@ class Kart(FlaskForm):
 class Remove(FlaskForm):
     def __init__(self,*args, **kwargs):
         super(Remove, self).__init__(*args, **kwargs)
-        for attribute, value in kwargs.items():
+    def __setattr__(self,**attributes):
+        for attribute, value in attributes.items():
             setattr(self, attribute, value)
     submit2 = SubmitField("Done")
 
@@ -80,7 +81,7 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
-    remove_form = Remove(strange = "default")
+    remove_form = Remove()
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
         return(remove_form.strange)
     
