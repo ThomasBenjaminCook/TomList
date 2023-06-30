@@ -96,7 +96,7 @@ def data():
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
 
     remove_form = Remover()
-    if (kart_form.validate_on_submit() and kart_form.submit3.data):
+    if (remove_form.validate_on_submit() and remove_form.submit3.data):
         return(add_form.itemerem.data)
 
     weird_ids = []
