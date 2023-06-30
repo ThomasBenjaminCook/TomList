@@ -88,7 +88,7 @@ def data():
             weird_id = weird_ids[count]
             item = shopping_list[count]
             if(request.form.get(weird_id)):
-                return(weird_id)
+                return(shopping_list_dataframe.loc[int(weird_id.split("_")[-1])])
             count = count + 1
 
     aldistring = " "
