@@ -79,7 +79,7 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
-    remove_form = Remove("penis")
+    remove_form = Remove("default")
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
         return(remove_form.strange)
     
@@ -89,10 +89,10 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = "ALDI_"+str(target_index)
-            ALDI_string = ALDI_string + '{{ remove_form('+weird_id+').submit2() }}</br></br>'
+            ALDI_string = ALDI_string + '{{ setattr(remove_form,"strange",'+weird_id+').submit2() }}</br></br>'
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
-            coles_string = coles_string + '{{ remove_form('+weird_id+').submit2() }}</br></br>'
+            coles_string = coles_string + '{{ setattr(remove_form,"strange",'+weird_id+').submit2() }}</br></br>'
         count = count + 1
 
     first_layer.append(ALDI_string)
