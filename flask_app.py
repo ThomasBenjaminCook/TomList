@@ -92,6 +92,7 @@ def data():
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
             colesobjects.append(Remove(strange = weird_id))
+        print(weird_id)
         count = count + 1
 
     for object in aldiobjects:
