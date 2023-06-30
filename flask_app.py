@@ -72,6 +72,7 @@ def data():
     
     aldistring = " "
     colesstring = " "
+    weird_ids = []
 
     count = 0
     while count < len(shopping_list):
@@ -83,6 +84,7 @@ def data():
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
             colesstring = colesstring + '<input type="submit" value="'+item+'" name="'+weird_id+'"/></br></br>'
+        weird_ids.append(weird_id)
         count = count + 1
 
     first_layer.append(aldistring)
@@ -95,5 +97,14 @@ def data():
 
     first_layer.append(option_string)
     first_layer.append(option_string)
+
+    if request.method == "POST":
+        count = 0
+        weird_id = weird_ids[count]
+        item = shopping_list[count]
+        while count < len(shopping_list):
+            if(request.form.get(weird_id) == item):
+                return(weird_id)
+            count = count + 1
 
     return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form)
