@@ -35,6 +35,10 @@ class Kart(FlaskForm):
     itemer = StringField()
     submit1 = SubmitField('Submit')
 
+class Adder(FlaskForm):
+    shopper = StringField()
+    submit2 = SubmitField('Submit')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -70,6 +74,10 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
     
+    add_form = Kart()
+    if (add_form.validate_on_submit() and add_form.submit1.data):
+        return("Cock")
+
     weird_ids = []
     count = 0
     while count < len(shopping_list):
@@ -117,4 +125,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(option_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form)

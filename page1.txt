@@ -86,7 +86,7 @@
     <fieldset>
         <legend>Add Items</legend>
         <label for="itemin">Item:</label> <input type="text" id="fname" name="fname"><br><br>
-        <label for="shopin">Shop:</label> <input list="shop"> <datalist id="shop">
+        <label for="shopin">Shop:</label> {{ add_form.hidden_tag() }} {{ add_form.shopper(class="form-control", list="stuff") }} <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
         </datalist><br><br>
