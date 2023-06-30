@@ -80,7 +80,7 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
-    remove_form = Remove("default")
+    remove_form = Remove(strange = "default")
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
         return("hi")
     
