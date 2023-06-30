@@ -85,12 +85,12 @@
     <form>
     <fieldset>
         <legend>Add Items</legend>
-        <label for="itemin">Item:</label> <input type="text" id="fname" name="fname"><br><br>
+        <label for="itemin">Item:</label> {{ add_form.hidden_tag() }} {{ add_form.itemire() }}<br><br>
         <label for="shopin">Shop:</label> {{ add_form.hidden_tag() }} {{ add_form.shopper(class="form-control", list="stuff") }} <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
         </datalist><br><br>
-        <input type="submit" value="Submit">
+        {{ add_form.submit2() }}
     </fieldset>
     </form>
 
