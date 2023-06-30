@@ -97,7 +97,11 @@ def data():
 
     remove_form = Remover()
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
-        return(remove_form.itemerem.data)
+        total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == remove_form.itemerem.data].index, inplace=True)
+        total_list_dataframe=total_list_dataframe.set_index('itemID')
+        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace")
+        all_items = total_list_dataframe["item"].to_list()
+        shops = dataframe_to_dict(total_list_dataframe,"item","shop")
 
     weird_ids = []
     count = 0
