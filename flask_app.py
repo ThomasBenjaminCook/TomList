@@ -38,8 +38,8 @@ class Kart(FlaskForm):
 class Remove(FlaskForm):
     def __init__(self,strange=None,*args, **kwargs):
         self.strange = strange
-        self.submit2 = SubmitField("Done")
         super(Remove, self).__init__(*args, **kwargs)
+    submit2 = SubmitField("Done")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
