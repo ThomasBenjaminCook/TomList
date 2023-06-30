@@ -2,7 +2,7 @@ import pandas as pd
 import statistics
 import random
 from datetime import datetime, timedelta
-from flask import Flask, request, redirect, make_response, render_template_string
+from flask import Flask, request, render_template_string
 from pathlib import Path
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
@@ -37,6 +37,8 @@ class Kart(FlaskForm):
 
 class Remove(FlaskForm):
     submit2 = SubmitField("Done")
+    def __init__(self,strange):
+        self.strange = strange
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
@@ -76,19 +78,19 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
 
-    remove_form = Remove()
+    remove_form = Remove("penis")
     if (remove_form.validate_on_submit() and remove_form.submit2.data):
-        return(remove_form.submit2.description.data)
+        return(remove_form.strange)
     
     count = 0
     while count < len(shopping_list):
         item = shopping_list[count]
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
-            weird_id = str(target_index)
+            weird_id = "ALDI_"+str(target_index)
             ALDI_string = ALDI_string + '{{ remove_form.submit2(description='+weird_id+') }}</br></br>'
         if(shops[item] == "Coles"):
-            weird_id = str(target_index)
+            weird_id = "Coles_"+str(target_index)
             coles_string = coles_string + '{{ remove_form.submit2(description='+weird_id+') }}</br></br>'
         count = count + 1
 
