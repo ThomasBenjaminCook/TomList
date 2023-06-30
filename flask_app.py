@@ -75,7 +75,7 @@ def data():
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
     
-    add_form = Kart()
+    add_form = Adder()
     if (add_form.validate_on_submit() and add_form.submit2.data):
         return("Cock")
 
