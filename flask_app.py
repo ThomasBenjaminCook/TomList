@@ -36,9 +36,10 @@ class Kart(FlaskForm):
     submit1 = SubmitField('Submit')
 
 class Remove(FlaskForm):
-    def __init__(self,strange=None,*args, **kwargs):
-        self.strange = strange
+    def __init__(self,*args, **kwargs):
         super(Remove, self).__init__(*args, **kwargs)
+        for attribute, value in kwargs.items():
+            setattr(self, attribute, value)
     submit2 = SubmitField("Done")
 
 app = Flask(__name__)
@@ -89,10 +90,10 @@ def data():
         target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
             weird_id = "ALDI_"+str(target_index)
-            ALDI_string = ALDI_string + "{% set remove_form = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
+            ALDI_string = ALDI_string + "{% set _ = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
-            coles_string = coles_string + "{% set remove_form = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
+            coles_string = coles_string + "{% set _ = remove_form.__setattr__('strange', '"+weird_id+"') %} {{ remove_form.submit2() }}</br></br>"
         count = count + 1
 
     first_layer.append(ALDI_string)
