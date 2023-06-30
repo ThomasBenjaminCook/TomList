@@ -78,10 +78,6 @@ def data():
         shopping_list_dataframe.loc[next_index]=selected_item
         shopping_list_indicies.append(next_index)
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
-
-    remove_form = Remove(strange="penis")
-    if (remove_form.validate_on_submit() and remove_form.submit2.data):
-        return(remove_form.strange)
     
     aldiobjects = []
     colesobjects = []
@@ -97,6 +93,13 @@ def data():
             weird_id = "Coles_"+str(target_index)
             colesobjects.append(Remove(strange = weird_id))
         count = count + 1
+
+    for object in aldiobjects:
+        if (object.validate_on_submit() and object.submit2.data):
+            return(object.strange)
+    for object in colesobjects:
+        if (object.validate_on_submit() and object.submit2.data):
+            return(object.strange)
 
     option_string = " "
 
