@@ -47,12 +47,11 @@
     }
 
     #recipe {
-      position: absolute;
+      position: static;
       text-align: center;
       width: 97%;
-      background-color: rgba(100,50,10,0.5);
+      background-color: rgba(100,30,20,0.5);
       height: 20%;
-      top: 54%;
       padding: 1.5%;
     }
 
