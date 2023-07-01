@@ -51,7 +51,8 @@
 <body>
   <div id="menu">
     <span class="menu-item" data-slide="slide1">List</span> ~ ~ ~ ~ 
-    <span class="menu-item" data-slide="slide2">Edit</span>
+    <span class="menu-item" data-slide="slide2">Edit</span> ~ ~ ~ ~
+    <span class="menu-item" data-slide="slide3">Recipes</span> 
   </div>
 
   <div class="slide" id="slide1">
@@ -110,6 +111,10 @@
 
     </div>
 
+  </div>
+
+  <div class="slide" id="slide3">
+    hello
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
