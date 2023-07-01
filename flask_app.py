@@ -155,4 +155,6 @@ def data():
     for instruction in recipes_dataframe["instructions"]:
         recipe_string = recipe_string + '<div id="recipe">' + instruction+ "</div></br>"
 
+    first_layer.append(recipe_string)
+
     return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form)
