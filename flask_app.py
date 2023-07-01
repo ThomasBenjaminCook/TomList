@@ -66,6 +66,7 @@ def data():
 
     shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
+    recipes_dataframe = pd.read_sql_table("recipe", con=engine, index_col="itemID")
 
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
@@ -148,5 +149,10 @@ def data():
 
     first_layer.append(option_string)
     first_layer.append(option_string)
+
+    recipe_string = " "
+
+    for instruction in recipes_dataframe["instructions"]:
+        recipe_string = recipe_string + '<div id="recipe">' + instruction+ "</div></br>"
 
     return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form)

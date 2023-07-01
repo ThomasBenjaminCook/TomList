@@ -46,6 +46,16 @@
       padding: 1.5%;
     }
 
+    #recipe {
+      position: absolute;
+      text-align: center;
+      width: 97%;
+      background-color: rgba(100,50,10,0.5);
+      height: 20%;
+      top: 54%;
+      padding: 1.5%;
+    }
+
   </style>
 </head>
 <body>
