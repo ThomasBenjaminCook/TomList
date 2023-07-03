@@ -48,10 +48,8 @@
 
     #recipe {
       position: static;
-      text-align: center;
       width: 97%;
       background-color: rgba(100,30,20,0.5);
-      height: 20%;
       padding: 1.5%;
     }
 
