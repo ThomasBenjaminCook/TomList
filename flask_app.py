@@ -77,7 +77,7 @@ def data():
 
     kart_form = Kart()
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
-        selected_item = kart_form.itemer.data
+        selected_item = (" ").join((kart_form.itemer.data).split("_"))
         shopping_list.append(selected_item)
         next_index = get_next_index(shopping_list_dataframe)
         shopping_list_dataframe.loc[next_index]=selected_item
@@ -98,8 +98,7 @@ def data():
 
     remove_form = Remover()
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
-        print(remove_form.itemerem.data)
-        total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == remove_form.itemerem.data].index.values, inplace=True)
+        total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == (" ").join((remove_form.itemerem.data).split("_"))].index.values, inplace=True)
         total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
         all_items = total_list_dataframe["item"].to_list()
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
@@ -146,7 +145,7 @@ def data():
     option_string = " "
 
     for item in all_items:
-        option_string = option_string + '<option value='+item+'>'
+        option_string = option_string + '<option value='+("_").join(item.split(" "))+'>'
 
     first_layer.append(option_string)
     first_layer.append(option_string)
