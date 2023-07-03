@@ -98,7 +98,7 @@ def data():
 
     remove_form = Remover()
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
-        print(total_list_dataframe["item"])
+        print(total_list_dataframe["item"].loc[0])
         total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == remove_form.itemerem.data].index.values, inplace=True)
         total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
         all_items = total_list_dataframe["item"].to_list()
