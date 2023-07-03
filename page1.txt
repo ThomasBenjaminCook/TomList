@@ -77,7 +77,7 @@
         <legend>Add Items</legend>
         <label for="itemout">Item:</label> 
         {{ kart_form.hidden_tag() }}
-        {{ kart_form.itemer(class="form-control", list="stuff") }}
+        {{ kart_form.itemer(class="form-control", list="stuff", autocomplete="off") }}
         <datalist id="stuff">
             @
         </datalist><br><br>
@@ -93,7 +93,7 @@
     <form method="POST">
     <fieldset>
         <legend>Add Items</legend>
-        <label for="itemin">Item:</label> {{ add_form.hidden_tag() }} {{ add_form.itemire() }}<br><br>
+        <label for="itemin">Item:</label> {{ add_form.hidden_tag() }} {{ add_form.itemire(autocomplete="off") }}<br><br>
         <label for="shopin">Shop:</label> {{ add_form.hidden_tag() }} {{ add_form.shopper(class="form-control", list="shop") }} <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
@@ -109,7 +109,7 @@
     <form method="POST">
     <fieldset>
         <legend>Remove Items</legend>
-        <label for="itemout">Item:</label> {{ remove_form.hidden_tag() }} {{ remove_form.itemerem(class="form-control", list="things") }} <datalist id="things">
+        <label for="itemout">Item:</label> {{ remove_form.hidden_tag() }} {{ remove_form.itemerem(class="form-control", list="things", autocomplete="off") }} <datalist id="things">
           @
         </datalist><br><br>
         {{ remove_form.submit3() }}
