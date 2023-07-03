@@ -78,6 +78,7 @@ def data():
     kart_form = Kart()
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
         selected_item = kart_form.itemer.data
+        kart_form.itemer.data = ""
         shopping_list.append(selected_item)
         next_index = get_next_index(shopping_list_dataframe)
         shopping_list_dataframe.loc[next_index]=selected_item
@@ -87,7 +88,9 @@ def data():
     add_form = Adder()
     if (add_form.validate_on_submit() and add_form.submit2.data):
         newer_item = add_form.itemire.data
+        add_form.itemire.data = ""
         corresponding_shop = add_form.shopper.data
+        add_form.shopper.data = ''
         next_index = get_next_index(total_list_dataframe)
         row = pd.DataFrame({"itemID": next_index, "item": newer_item, "shop" : corresponding_shop},index=[next_index])
         row.set_index('itemID', inplace=True)
@@ -98,7 +101,9 @@ def data():
 
     remove_form = Remover()
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
-        total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == remove_form.itemerem.data].index.values, inplace=True)
+        thing_to_remove = remove_form.itemerem.data
+        remove_form.itemerem.data = ""
+        total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == thing_to_remove].index.values, inplace=True)
         total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
         all_items = total_list_dataframe["item"].to_list()
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
