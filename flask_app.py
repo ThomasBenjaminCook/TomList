@@ -76,7 +76,7 @@ def data():
     first_layer = []
 
     kart_form = Kart()
-    if (kart_form.validate_on_submit() and kart_form.submit1.data):
+    if (kart_form.validate_on_submit() and kart_form.submit1.data and (kart_form.itemer.data in all_items)):
         selected_item = kart_form.itemer.data
         kart_form.itemer.data = ""
         shopping_list.append(selected_item)
@@ -86,7 +86,7 @@ def data():
         shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
     
     add_form = Adder()
-    if (add_form.validate_on_submit() and add_form.submit2.data):
+    if (add_form.validate_on_submit() and add_form.submit2.data and (len(add_form.itemire.data)>=2)):
         newer_item = add_form.itemire.data
         add_form.itemire.data = ""
         corresponding_shop = add_form.shopper.data
@@ -100,7 +100,7 @@ def data():
         shops = dataframe_to_dict(total_list_dataframe,"item","shop")
 
     remove_form = Remover()
-    if (remove_form.validate_on_submit() and remove_form.submit3.data):
+    if (remove_form.validate_on_submit() and remove_form.submit3.data and (remove_form.itemerem.data not in shopping_list)):
         thing_to_remove = remove_form.itemerem.data
         remove_form.itemerem.data = ""
         total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == thing_to_remove].index.values, inplace=True)
