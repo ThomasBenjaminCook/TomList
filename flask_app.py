@@ -76,37 +76,48 @@ def data():
     first_layer = []
 
     kart_form = Kart()
-    if (kart_form.validate_on_submit() and kart_form.submit1.data and (kart_form.itemer.data in all_items)):
-        selected_item = kart_form.itemer.data
-        kart_form.itemer.data = ""
-        shopping_list.append(selected_item)
-        next_index = get_next_index(shopping_list_dataframe)
-        shopping_list_dataframe.loc[next_index]=selected_item
-        shopping_list_indicies.append(next_index)
-        shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
+    if (kart_form.validate_on_submit() and kart_form.submit1.data):
+        if(kart_form.itemer.data in all_items):
+            selected_item = kart_form.itemer.data
+            kart_form.itemer.data = ""
+            shopping_list.append(selected_item)
+            next_index = get_next_index(shopping_list_dataframe)
+            shopping_list_dataframe.loc[next_index]=selected_item
+            shopping_list_indicies.append(next_index)
+            shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
+        else:
+            kart_form.itemer.data = ""
+
     
     add_form = Adder()
-    if (add_form.validate_on_submit() and add_form.submit2.data and (len(add_form.itemire.data)>=2)):
-        newer_item = add_form.itemire.data
-        add_form.itemire.data = ""
-        corresponding_shop = add_form.shopper.data
-        add_form.shopper.data = ''
-        next_index = get_next_index(total_list_dataframe)
-        row = pd.DataFrame({"itemID": next_index, "item": newer_item, "shop" : corresponding_shop},index=[next_index])
-        row.set_index('itemID', inplace=True)
-        total_list_dataframe = pd.concat([total_list_dataframe,row], axis=0)
-        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
-        all_items = total_list_dataframe["item"].to_list()
-        shops = dataframe_to_dict(total_list_dataframe,"item","shop")
+    if (add_form.validate_on_submit() and add_form.submit2.data):
+        if(len(add_form.itemire.data) >= 2):
+            newer_item = add_form.itemire.data
+            add_form.itemire.data = ""
+            corresponding_shop = add_form.shopper.data
+            add_form.shopper.data = ''
+            next_index = get_next_index(total_list_dataframe)
+            row = pd.DataFrame({"itemID": next_index, "item": newer_item, "shop" : corresponding_shop},index=[next_index])
+            row.set_index('itemID', inplace=True)
+            total_list_dataframe = pd.concat([total_list_dataframe,row], axis=0)
+            total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
+            all_items = total_list_dataframe["item"].to_list()
+            shops = dataframe_to_dict(total_list_dataframe,"item","shop")
+        else:
+            add_form.itemire.data = ""
+
 
     remove_form = Remover()
-    if (remove_form.validate_on_submit() and remove_form.submit3.data and (remove_form.itemerem.data not in shopping_list)):
-        thing_to_remove = remove_form.itemerem.data
-        remove_form.itemerem.data = ""
-        total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == thing_to_remove].index.values, inplace=True)
-        total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
-        all_items = total_list_dataframe["item"].to_list()
-        shops = dataframe_to_dict(total_list_dataframe,"item","shop")
+    if (remove_form.validate_on_submit() and remove_form.submit3.data):
+        if(remove_form.itemerem.data not in shopping_list):
+            thing_to_remove = remove_form.itemerem.data
+            remove_form.itemerem.data = ""
+            total_list_dataframe.drop(total_list_dataframe[total_list_dataframe["item"] == thing_to_remove].index.values, inplace=True)
+            total_list_dataframe.to_sql("all_items", con=engine, if_exists="replace",index_label="itemID")
+            all_items = total_list_dataframe["item"].to_list()
+            shops = dataframe_to_dict(total_list_dataframe,"item","shop")
+        else:
+            remove_form.itemerem.data = ""
 
     weird_ids = []
     count = 0
