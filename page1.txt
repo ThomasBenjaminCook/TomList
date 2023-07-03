@@ -93,8 +93,13 @@
     <form method="POST">
     <fieldset>
         <legend>Add Items</legend>
-        <label for="itemin">Item:</label> {{ add_form.hidden_tag() }} {{ add_form.itemire(autocomplete="off") }}<br><br>
-        <label for="shopin">Shop:</label> {{ add_form.hidden_tag() }} {{ add_form.shopper(class="form-control", list="shop") }} <datalist id="shop">
+        <label for="itemin">Item:</label> 
+        {{ add_form.hidden_tag() }} 
+        {{ add_form.itemire(autocomplete="off") }}<br><br>
+        <label for="shopin">Shop:</label> 
+        {{ add_form.hidden_tag() }} 
+        {{ add_form.shopper(class="form-control", list="shop", autocomplete="off") }} 
+        <datalist id="shop">
             <option value="Coles">
             <option value="ALDI">
         </datalist><br><br>
@@ -109,7 +114,10 @@
     <form method="POST">
     <fieldset>
         <legend>Remove Items</legend>
-        <label for="itemout">Item:</label> {{ remove_form.hidden_tag() }} {{ remove_form.itemerem(class="form-control", list="things", autocomplete="off") }} <datalist id="things">
+        <label for="itemout">Item:</label> 
+        {{ remove_form.hidden_tag() }} 
+        {{ remove_form.itemerem(class="form-control", list="things", autocomplete="off") }} 
+        <datalist id="things">
           @
         </datalist><br><br>
         {{ remove_form.submit3() }}
