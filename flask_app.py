@@ -194,17 +194,18 @@ def data():
         recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
     edi_form.instruch.data = (" ").join(target.split("v"))
 
-    recipe_string = " "
-    count = 0
-    for instruction in recipes_dataframe["instructions"]:
-        recipe_index = recipes_indicies[count]
-        personal_remove_id = ("_").join(instruction.split(" "))
-        personal_edit_id = ("v").join(instruction.split(" "))
-        if(recipes_dataframe.loc[recipe_index,"is_edit"] == "one"):
-            recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="edit">Recipe:</label> {{ edi_form.hidden_tag() }} {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br>{{ edi_form.submit5() }}</fieldset></form></div>'
-        else:
-            recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
-        count = count + 1
+    if(len(recipes_indicies) > 0):
+        recipe_string = " "
+        count = 0
+        for instruction in recipes_dataframe["instructions"]:
+            recipe_index = recipes_indicies[count]
+            personal_remove_id = ("_").join(instruction.split(" "))
+            personal_edit_id = ("v").join(instruction.split(" "))
+            if(recipes_dataframe.loc[recipe_index,"is_edit"] == "one"):
+                recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="edit">Recipe:</label> {{ edi_form.hidden_tag() }} {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br>{{ edi_form.submit5() }}</fieldset></form></div>'
+            else:
+                recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
+            count = count + 1
 
     aldistring = " "
     colesstring = " "
