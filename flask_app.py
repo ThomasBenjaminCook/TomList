@@ -198,7 +198,7 @@ def data():
     for instruction in recipes_dataframe["instructions"]:
         personal_remove_id = ("_").join(instruction.split(" "))
         personal_edit_id = ("v").join(instruction.split(" "))
-        if(recipes_dataframe["is_edit"] == "one"):
+        if(recipes_dataframe["is_edit"][count] == "one"):
             recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="edit">Recipe:</label> {{ edi_form.hidden_tag() }} {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br>{{ edi_form.submit5() }}</fieldset></form></div>'
         else:
             recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
