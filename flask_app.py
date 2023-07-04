@@ -208,6 +208,8 @@ def data():
             else:
                 recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
             count = count + 1
+    else:
+        recipe_string = " "
 
     aldistring = " "
     colesstring = " "
