@@ -131,7 +131,6 @@
   <div class="slide" id="slide3">
     @
     <div id="recipe">
-      New Recipe</br></br>
       <form method="POST">
         <fieldset>
         <legend>New Recipe</legend>

@@ -55,6 +55,10 @@ class Recip(FlaskForm):
     instru = StringField()
     submit4 = SubmitField('Submit')
 
+class Edit(FlaskForm):
+    instruch = StringField()
+    submit5 = SubmitField('Submit')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -123,7 +127,7 @@ def data():
     reci_form = Recip()
     if (reci_form.validate_on_submit() and reci_form.submit4.data):
         newer_reci = reci_form.instru.data
-        add_form.itemire.data = ""
+        reci_form.instru.data = ""
         next_index = get_next_index(recipes_dataframe)
         row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci},index=[next_index])
         row.set_index('itemID', inplace=True)
@@ -140,20 +144,17 @@ def data():
         if(shops[item] == "Coles"):
             weird_id = "Coles_"+str(target_index)
         weird_ids.append(weird_id)
-        count = count + 1
+        count = count + 1 
 
     personal_remove_ids = []
     personal_edit_ids = []
-    recipe_string = " "
     for instruction in recipes_dataframe["instructions"]:
         personal_remove_id = ("_").join(instruction.split(" "))
         personal_remove_ids.append(personal_remove_id)
         personal_edit_id = ("v").join(instruction.split(" "))
         personal_edit_ids.append(personal_edit_id)
-        recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></br></br></div></br>"   
 
     if request.method == "POST":
-
         count = 0
         while count < len(shopping_list):
             weird_id = weird_ids[count]
@@ -170,7 +171,13 @@ def data():
                 actual_remove_id = (" ").join(specific_remove_id.split("_"))
 
                 recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
-                recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
+                recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
+
+    recipe_string = " "
+    for instruction in recipes_dataframe["instructions"]:
+        personal_remove_id = ("_").join(instruction.split(" "))
+        personal_edit_id = ("v").join(instruction.split(" "))
+        recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
 
     aldistring = " "
     colesstring = " "
