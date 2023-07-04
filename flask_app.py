@@ -86,6 +86,7 @@ def data():
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
     shopping_list = shopping_list_dataframe["item"].to_list()
     shopping_list_indicies = list(shopping_list_dataframe.index.values)
+    recipes_indicies = list(recipes_dataframe.index.values)
 
     kart_form = Kart()
     if (kart_form.validate_on_submit() and kart_form.submit1.data):
@@ -196,9 +197,10 @@ def data():
     recipe_string = " "
     count = 0
     for instruction in recipes_dataframe["instructions"]:
+        recipe_index = recipes_indicies[count]
         personal_remove_id = ("_").join(instruction.split(" "))
         personal_edit_id = ("v").join(instruction.split(" "))
-        if(recipes_dataframe["is_edit"][count] == "one"):
+        if(recipes_dataframe.loc[count,"is_edit"] == "one"):
             recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="edit">Recipe:</label> {{ edi_form.hidden_tag() }} {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br>{{ edi_form.submit5() }}</fieldset></form></div>'
         else:
             recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
