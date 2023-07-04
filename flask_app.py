@@ -153,7 +153,10 @@ def data():
 
         for specific_remove_id in personal_remove_ids:
             if(request.form.get(specific_remove_id)):
-                return(specific_remove_id)
+                actual_remove_id = (" ").join(specific_remove_id.split("_"))
+
+                recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
+                recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
 
     aldistring = " "
     colesstring = " "
