@@ -91,7 +91,7 @@ def data():
     
     add_form = Adder()
     if (add_form.validate_on_submit() and add_form.submit2.data):
-        if((len(add_form.itemire.data) >= 2) and (len(add_form.shopper.data)>1) and (add_form.shopper.data not in all_items)):
+        if((len(add_form.itemire.data) >= 2) and (len(add_form.shopper.data)>1) and (add_form.itemire.data not in all_items)):
             newer_item = add_form.itemire.data
             add_form.itemire.data = ""
             corresponding_shop = add_form.shopper.data
