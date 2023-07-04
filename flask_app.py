@@ -38,6 +38,11 @@ def get_next_index(dataframe):
         next_index = 0
     return(next_index)
 
+def replace_column_value(dataframe, column_name, string1, string2):
+    new_dataframe = dataframe.copy()
+    new_dataframe[column_name] = new_dataframe[column_name].replace(string1, string2)
+    return new_dataframe
+
 class Kart(FlaskForm):
     itemer = StringField()
     submit1 = SubmitField('Submit')
@@ -75,6 +80,8 @@ def data():
     shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
     recipes_dataframe = pd.read_sql_table("recipe", con=engine, index_col="itemID")
+    recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","two","one")
+    recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","one","zero")
 
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
