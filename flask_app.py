@@ -169,7 +169,7 @@ def data():
     recipe_string = " "
 
     for instruction in recipes_dataframe["instructions"]:
-        recipe_string = recipe_string + '<div id="recipe">' + instruction + "</div></br></br><input type='submit' value='remove'/></br></br><input type='submit' value='edit'/></br></br>"
+        recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><input type='submit' value='remove'/></br></br><input type='submit' value='edit'/></br></br></div>"
 
     first_layer.append(recipe_string)
 
