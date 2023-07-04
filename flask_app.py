@@ -81,6 +81,7 @@ def data():
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
     recipes_dataframe = pd.read_sql_table("recipe", con=engine, index_col="itemID")
     recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","one","zero")
+    recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","two","one")
 
     all_items = total_list_dataframe["item"].to_list()
     shops = dataframe_to_dict(total_list_dataframe,"item","shop")
@@ -185,7 +186,7 @@ def data():
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "one"
+                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "two"
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
