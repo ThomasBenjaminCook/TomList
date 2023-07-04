@@ -169,15 +169,25 @@ def data():
         for specific_remove_id in personal_remove_ids:
             if(request.form.get(specific_remove_id)):
                 actual_remove_id = (" ").join(specific_remove_id.split("_"))
-
                 recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
+
+        target = "None"
+        for specific_edit_id in personal_edit_ids:
+            if(request.form.get(specific_edit_id)):
+                target = specific_edit_id
+
+    edi_form = Edit()
+    edi_form.instruch.data = (" ").join(target.split("v"))
 
     recipe_string = " "
     for instruction in recipes_dataframe["instructions"]:
         personal_remove_id = ("_").join(instruction.split(" "))
         personal_edit_id = ("v").join(instruction.split(" "))
-        recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
+        if(personal_edit_id==target):
+            recipe_string = recipe_string + '<form method="POST"><fieldset><legend>Edit Recipe</legend><label for="edit">Recipe:</label> {{ edi_form.hidden_tag() }} {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br>{{ edi_form.submit5() }}</fieldset></form>'
+        else:
+            recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
 
     aldistring = " "
     colesstring = " "
@@ -202,4 +212,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(recipe_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form, reci_form=reci_form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form, reci_form=reci_form, edi_form=edi_form)
