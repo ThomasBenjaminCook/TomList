@@ -51,6 +51,10 @@ class Remover(FlaskForm):
     itemerem = StringField()
     submit3 = SubmitField('Submit')
 
+class Recip(FlaskForm):
+    instru = StringField()
+    submit4 = SubmitField('Submit')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'u3ygfr7evyguyg87y6fuev$%^&^%$'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -115,6 +119,16 @@ def data():
             shops = dataframe_to_dict(total_list_dataframe,"item","shop")
         else:
             remove_form.itemerem.data = ""
+
+    reci_form = Recip()
+    if (reci_form.validate_on_submit() and reci_form.submit4.data):
+        newer_reci = reci_form.instru.data
+        add_form.itemire.data = ""
+        next_index = get_next_index(recipes_dataframe)
+        row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci},index=[next_index])
+        row.set_index('itemID', inplace=True)
+        recipes_dataframe = pd.concat([recipes_dataframe,row], axis=0)
+        recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
 
     weird_ids = []
     count = 0
@@ -181,4 +195,4 @@ def data():
     first_layer.append(option_string)
     first_layer.append(recipe_string)
 
-    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form)
+    return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form, reci_form=reci_form)

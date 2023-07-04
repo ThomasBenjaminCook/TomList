@@ -130,6 +130,18 @@
 
   <div class="slide" id="slide3">
     @
+    <div id="recipe">
+      New Recipe</br></br>
+      <form method="POST">
+        <fieldset>
+        <legend>New Recipe</legend>
+          <label for="reci">Item:</label> 
+          {{ reci_form.hidden_tag() }} 
+          {{ reci_form.instru(class="form-control", autocomplete="off") }} </br></br>
+          {{ reci_form.submit4() }}
+        </fieldset>
+      </form>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
