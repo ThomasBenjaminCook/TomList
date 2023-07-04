@@ -176,6 +176,8 @@ def data():
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
+                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"]="one"
+                recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
     edi_form.instruch.data = (" ").join(target.split("v"))
