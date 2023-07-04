@@ -129,7 +129,7 @@ def data():
         newer_reci = reci_form.instru.data
         reci_form.instru.data = ""
         next_index = get_next_index(recipes_dataframe)
-        row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci},index=[next_index])
+        row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci,"is_edit":"zero"},index=[next_index])
         row.set_index('itemID', inplace=True)
         recipes_dataframe = pd.concat([recipes_dataframe,row], axis=0)
         recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
@@ -176,7 +176,7 @@ def data():
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"]="one"
+                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"]="two"
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
