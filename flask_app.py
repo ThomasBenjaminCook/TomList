@@ -154,6 +154,7 @@ def data():
         personal_edit_id = ("v").join(instruction.split(" "))
         personal_edit_ids.append(personal_edit_id)
 
+    target = "None"
     if request.method == "POST":
         count = 0
         while count < len(shopping_list):
@@ -172,7 +173,6 @@ def data():
                 recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-        target = "None"
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
