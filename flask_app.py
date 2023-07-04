@@ -139,6 +139,7 @@ def data():
         row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci,"is_edit":"zero"},index=[next_index])
         row.set_index('itemID', inplace=True)
         recipes_dataframe = pd.concat([recipes_dataframe,row], axis=0)
+        recipes_indicies = list(recipes_dataframe.index.values)
         recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
 
     weird_ids = []
@@ -178,6 +179,7 @@ def data():
             if(request.form.get(specific_remove_id)):
                 actual_remove_id = (" ").join(specific_remove_id.split("_"))
                 recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
+                recipes_indicies = list(recipes_dataframe.index.values)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
         for specific_edit_id in personal_edit_ids:
