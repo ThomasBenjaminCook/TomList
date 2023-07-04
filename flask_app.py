@@ -80,7 +80,6 @@ def data():
     shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
     recipes_dataframe = pd.read_sql_table("recipe", con=engine, index_col="itemID")
-    recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","two","one")
     recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","one","zero")
 
     all_items = total_list_dataframe["item"].to_list()
@@ -183,20 +182,27 @@ def data():
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"]="two"
+                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "one"
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
+    if (remove_form.validate_on_submit() and edi_form.submit5.data):
+        changed = edi_form.instruch.data
+        index_to_change = recipes_dataframe[recipes_dataframe["id_edit"] == "one"].index.values
+        recipes_dataframe.loc[index_to_change,"instructions"] = changed
+        recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
     edi_form.instruch.data = (" ").join(target.split("v"))
 
     recipe_string = " "
+    count = 0
     for instruction in recipes_dataframe["instructions"]:
         personal_remove_id = ("_").join(instruction.split(" "))
         personal_edit_id = ("v").join(instruction.split(" "))
-        if(personal_edit_id==target):
+        if(recipes_dataframe["is_edit"] == "one"):
             recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="edit">Recipe:</label> {{ edi_form.hidden_tag() }} {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br>{{ edi_form.submit5() }}</fieldset></form></div>'
         else:
             recipe_string = recipe_string + '<div id="recipe">' + instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/></br></br><input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
+        count = count + 1
 
     aldistring = " "
     colesstring = " "
