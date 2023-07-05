@@ -193,16 +193,16 @@ def data():
                 recipes_indicies = list(recipes_dataframe.index.values)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-        for specific_remove_id in personal_remove_ids:
-            if(request.form.get(specific_remove_id+"_image")):
-                return(specific_remove_id)
-
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
                 recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "two"
                 target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
+
+        file = request.files['file']
+        if(file.filename != ''):
+            return("Hi")
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
