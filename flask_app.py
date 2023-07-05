@@ -136,16 +136,21 @@ def data():
 
     reci_form = Recip()
     if (reci_form.validate_on_submit() and reci_form.submit4.data):
-        newer_reci = reci_form.instru.data
-        newer_title = reci_form.tetil.data
-        reci_form.instru.data = ""
-        reci_form.tetil.data = ""
-        next_index = get_next_index(recipes_dataframe)
-        row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci,"is_edit":"zero", "title": newer_title},index=[next_index])
-        row.set_index('itemID', inplace=True)
-        recipes_dataframe = pd.concat([recipes_dataframe,row], axis=0)
-        recipes_indicies = list(recipes_dataframe.index.values)
-        recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
+        if((len(reci_form.instru.data)>0) and (len(reci_form.tetil.data)>0)):
+            newer_reci = reci_form.instru.data
+            newer_title = reci_form.tetil.data
+            reci_form.instru.data = ""
+            reci_form.tetil.data = ""
+            next_index = get_next_index(recipes_dataframe)
+            row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci,"is_edit":"zero", "title": newer_title},index=[next_index])
+            row.set_index('itemID', inplace=True)
+            recipes_dataframe = pd.concat([recipes_dataframe,row], axis=0)
+            recipes_indicies = list(recipes_dataframe.index.values)
+            recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace",index_label="itemID")
+        else:
+            reci_form.instru.data = ""
+            reci_form.tetil.data = ""
+
 
     weird_ids = []
     count = 0
@@ -197,12 +202,13 @@ def data():
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
-        changed = edi_form.instruch.data
-        changed_title = edi_form.titel.data
-        index_to_change = recipes_dataframe[recipes_dataframe["is_edit"] == "one"].index.values
-        recipes_dataframe.loc[index_to_change,"instructions"] = changed
-        recipes_dataframe.loc[index_to_change,"title"] = changed_title
-        recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
+        if((len(edi_form.instruch.data)>0) and (len(edi_form.titel.data)>0)):
+            changed = edi_form.instruch.data
+            changed_title = edi_form.titel.data
+            index_to_change = recipes_dataframe[recipes_dataframe["is_edit"] == "one"].index.values
+            recipes_dataframe.loc[index_to_change,"instructions"] = changed
+            recipes_dataframe.loc[index_to_change,"title"] = changed_title
+            recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
     edi_form.instruch.data = (" ").join(target.split("v"))
     edi_form.titel.data = target_title
 
