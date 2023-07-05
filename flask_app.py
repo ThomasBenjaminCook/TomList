@@ -200,9 +200,10 @@ def data():
                 target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-        file = request.files['file']
-        if(file.filename != ''):
-            return("Hi")
+        if("file" in request.files):
+            file = request.files['file']
+            if(file.filename != ''):
+                return("Hi")
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
