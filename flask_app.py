@@ -58,6 +58,7 @@ class Remover(FlaskForm):
 
 class Recip(FlaskForm):
     instru = StringField()
+    tetil = StringField()
     submit4 = SubmitField('Submit')
 
 class Edit(FlaskForm):
@@ -136,9 +137,11 @@ def data():
     reci_form = Recip()
     if (reci_form.validate_on_submit() and reci_form.submit4.data):
         newer_reci = reci_form.instru.data
+        newer_title = reci_form.tetil.data
         reci_form.instru.data = ""
+        reci_form.tetil.data = ""
         next_index = get_next_index(recipes_dataframe)
-        row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci,"is_edit":"zero"},index=[next_index])
+        row = pd.DataFrame({"itemID": next_index, "instructions": newer_reci,"is_edit":"zero", "title": newer_title},index=[next_index])
         row.set_index('itemID', inplace=True)
         recipes_dataframe = pd.concat([recipes_dataframe,row], axis=0)
         recipes_indicies = list(recipes_dataframe.index.values)

@@ -136,6 +136,7 @@
         <legend>New Recipe</legend>
           <label for="reci">Recipe:</label> 
           {{ reci_form.hidden_tag() }} 
+          {{ reci_form.tetil(class="form-control", autocomplete="off") }} </br></br>
           {{ reci_form.instru(class="form-control", autocomplete="off") }} </br></br>
           {{ reci_form.submit4() }}
         </fieldset>
