@@ -2,7 +2,7 @@ import pandas as pd
 import statistics
 import random
 from datetime import datetime, timedelta
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template_string, url_for
 from pathlib import Path
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
