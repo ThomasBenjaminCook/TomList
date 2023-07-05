@@ -223,7 +223,9 @@ def data():
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
                 recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
-                recipe_string = recipe_string + '<div id="recipe"><b>' + title +"</b></br></br>"+ instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/>   <input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"  
+                recipe_string = recipe_string + '<div id="recipe"><b>' + title +"</b></br></br>"
+                recipe_string = recipe_string + '<input type="image">'
+                recipe_string = recipe_string +  instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/>   <input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"
             count = count + 1
     else:
         recipe_string = " "
