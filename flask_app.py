@@ -165,6 +165,7 @@ def data():
         personal_edit_ids.append(personal_edit_id)
 
     target = "None"
+    target_title = "None"
     if request.method == "POST":
         count = 0
         while count < len(shopping_list):
