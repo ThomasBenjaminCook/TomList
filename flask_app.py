@@ -43,6 +43,18 @@ def replace_column_value(dataframe, column_name, string1, string2):
     new_dataframe[column_name] = new_dataframe[column_name].replace(string1, string2)
     return new_dataframe
 
+def refresh_ids(dataframe):
+    personal_remove_ids = []
+    personal_edit_ids = []
+    names = []
+    for instruction in dataframe["instructions"]:
+        personal_remove_id = ("_").join(instruction.split(" "))
+        personal_remove_ids.append(personal_remove_id)
+        personal_edit_id = ("v").join(instruction.split(" "))
+        personal_edit_ids.append(personal_edit_id)
+        names.append(personal_remove_id+"_image")
+    return(personal_remove_ids,personal_edit_ids,names)
+
 class Kart(FlaskForm):
     itemer = StringField()
     submit1 = SubmitField('Submit')
@@ -164,15 +176,7 @@ def data():
         weird_ids.append(weird_id)
         count = count + 1 
 
-    personal_remove_ids = []
-    personal_edit_ids = []
-    names = []
-    for instruction in recipes_dataframe["instructions"]:
-        personal_remove_id = ("_").join(instruction.split(" "))
-        personal_remove_ids.append(personal_remove_id)
-        personal_edit_id = ("v").join(instruction.split(" "))
-        personal_edit_ids.append(personal_edit_id)
-        names.append(personal_remove_id+"_image")
+    personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
 
     target = "None"
     target_title = "None"
@@ -193,15 +197,15 @@ def data():
                 actual_remove_id = (" ").join(specific_remove_id.split("_"))
                 recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
                 recipes_indicies = list(recipes_dataframe.index.values)
+                personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                print(target)
                 recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "two"
-                print(list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"]))
                 target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
+                personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
         for name_without_image in personal_remove_ids:
