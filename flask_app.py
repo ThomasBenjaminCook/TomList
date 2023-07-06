@@ -257,7 +257,7 @@ def data():
 
     autostring = ' '
     for namer in names:
-        autostring = autostring + "$(\"input[name='"+namer+"']\").change(function() { this.form.submit(); });"
+        autostring = autostring + " $(\"input[name='"+namer+"']\").change(function() { this.form.submit(); }); "
 
     first_layer = []
     first_layer.append(aldistring)
