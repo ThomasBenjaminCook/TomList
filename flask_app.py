@@ -57,8 +57,8 @@ def refresh_ids(dataframe):
 
 def stringescape(string):
     newstring = string
-    newstring = ('\"').join(newstring.split('"'))
-    newstring = ("\'").join(newstring.split("'"))
+    newstring = ('\\"').join(newstring.split('"'))
+    newstring = ("\\'").join(newstring.split("'"))
     return(newstring)
 
 class Kart(FlaskForm):
