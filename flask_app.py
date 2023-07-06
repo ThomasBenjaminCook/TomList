@@ -200,8 +200,9 @@ def data():
                 target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-        if("file" in request.files):
-            file = request.files['file']
+
+        file = request.files['file']
+        if(file.filename != ""):
             return(file.filename)
 
     edi_form = Edit()
