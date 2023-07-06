@@ -199,6 +199,7 @@ def data():
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
                 recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "two"
+                print(list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"]))
                 target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
