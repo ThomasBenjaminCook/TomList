@@ -204,9 +204,10 @@ def data():
 
         for name_without_image in personal_remove_ids:
             name = name_without_image+"_image"
-            file = request.files[name]
-            if(file.filename != ""):
-                return(file.filename + " " + (" ").join(specific_edit_id.split("_")))
+            if(name in request.files):
+                file = request.files[name]
+                if(file.filename != ""):
+                    return(file.filename + " " + (" ").join(specific_edit_id.split("_")))
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
