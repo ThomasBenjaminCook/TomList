@@ -152,7 +152,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
-    $("input[name=\'file_1\']").change(function() { this.form.submit(); });
+    $("input[name=\'file\']").change(function() { this.form.submit(); });
     $(document).ready(function() {
       $('.menu-item').click(function() {
         $('.slide').hide();
