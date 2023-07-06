@@ -43,23 +43,23 @@ def replace_column_value(dataframe, column_name, string1, string2):
     new_dataframe[column_name] = new_dataframe[column_name].replace(string1, string2)
     return new_dataframe
 
+def stringescape(string):
+    newstring = string
+    newstring = ('^').join(newstring.split('"'))
+    newstring = ("^").join(newstring.split("'"))
+    return(newstring)
+
 def refresh_ids(dataframe):
     personal_remove_ids = []
     personal_edit_ids = []
     names = []
     for instruction in dataframe["instructions"]:
-        personal_remove_id = ("_").join(instruction.split(" "))
+        personal_remove_id = stringescape(("_").join(instruction.split(" ")))
         personal_remove_ids.append(personal_remove_id)
-        personal_edit_id = ("v").join(instruction.split(" "))
+        personal_edit_id = stringescape(("&").join(instruction.split(" ")))
         personal_edit_ids.append(personal_edit_id)
         names.append(personal_remove_id+"_image")
     return(personal_remove_ids,personal_edit_ids,names)
-
-def stringescape(string):
-    newstring = string
-    newstring = ('\\"').join(newstring.split('"'))
-    newstring = ("\\'").join(newstring.split("'"))
-    return(newstring)
 
 class Kart(FlaskForm):
     itemer = StringField()
@@ -209,8 +209,8 @@ def data():
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"is_edit"] = "two"
-                target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
+                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("&"))].index.values,"is_edit"] = "two"
+                target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("&"))].index.values,"title"])[0]
                 personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
@@ -230,7 +230,7 @@ def data():
             recipes_dataframe.loc[index_to_change,"instructions"] = changed
             recipes_dataframe.loc[index_to_change,"title"] = changed_title
             recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
-    edi_form.instruch.data = (" ").join(target.split("v"))
+    edi_form.instruch.data = (" ").join(target.split("&"))
     edi_form.titel.data = target_title
 
     if(len(recipes_indicies) > 0):
@@ -240,7 +240,7 @@ def data():
             recipe_index = recipes_indicies[count]
             title = recipes_dataframe.loc[recipe_index,"title"]
             personal_remove_id = ("_").join(instruction.split(" "))
-            personal_edit_id = ("v").join(instruction.split(" "))
+            personal_edit_id = ("&").join(instruction.split(" "))
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
                 recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
@@ -269,7 +269,7 @@ def data():
 
     autostring = ' '
     for namer in names:
-        autostring = autostring + " $(\"input[name='"+stringescape(namer)+"']\").change(function() { this.form.submit(); }); "
+        autostring = autostring + " $(\"input[name='"+namer+"']\").change(function() { this.form.submit(); }); "
 
     first_layer = []
     first_layer.append(aldistring)
