@@ -203,7 +203,7 @@ def data():
 
         file = request.files['file']
         if(file.filename != ""):
-            return(file.filename)
+            return("hi")
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
