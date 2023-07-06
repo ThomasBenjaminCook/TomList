@@ -166,11 +166,13 @@ def data():
 
     personal_remove_ids = []
     personal_edit_ids = []
+    names = []
     for instruction in recipes_dataframe["instructions"]:
         personal_remove_id = ("_").join(instruction.split(" "))
         personal_remove_ids.append(personal_remove_id)
         personal_edit_id = ("v").join(instruction.split(" "))
         personal_edit_ids.append(personal_edit_id)
+        names.append(personal_remove_id+"_image")
 
     target = "None"
     target_title = "None"
@@ -200,10 +202,11 @@ def data():
                 target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("v"))].index.values,"title"])[0]
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-
-        file = request.files['file']
-        if(file.filename != ""):
-            return("hi")
+        for name_without_image in personal_remove_ids:
+            name = name_without_image+"_image"
+            file = request.files[name]
+            if(file.filename != ""):
+                return(file.filename + " " + (" ").join(specific_edit_id.split("_")))
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
@@ -229,7 +232,7 @@ def data():
                 recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
                 recipe_string = recipe_string + '<div id="recipe"><b>' + title +"</b></br></br>"
-                recipe_string = recipe_string + '<div class="image-upload"><label for="file-input"><img src="{{url_for(' + "'static', filename='default.jpg')}}"+'" width=25%/></label><form method="POST" enctype="multipart/form-data"><input type="file" id="file-input" name="file"></form></div></br>'
+                recipe_string = recipe_string + '<div class="image-upload"><label for="file-input"><img src="{{url_for(' + "'static', filename='default.jpg')}}"+'" width=25%/></label><form method="POST" enctype="multipart/form-data"><input type="file" id="file-input" name="'+personal_remove_id+"_image"+'"></form></div></br>'
                 recipe_string = recipe_string +  instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/>   <input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"
             count = count + 1
     else:
@@ -251,11 +254,16 @@ def data():
     for item in all_items:
         option_string = option_string + '<option value="'+item+'">'
 
+    autostring = ' '
+    for namer in names:
+        autostring = autostring + "$(\"input[name='"+namer+"']\").change(function() { this.form.submit(); });"
+
     first_layer = []
     first_layer.append(aldistring)
     first_layer.append(colesstring)
     first_layer.append(option_string)
     first_layer.append(option_string)
     first_layer.append(recipe_string)
+    first_layer.append(autostring)
 
     return render_template_string(stringinserter("@",page1,first_layer), kart_form=kart_form, add_form=add_form, remove_form=remove_form, reci_form=reci_form, edi_form=edi_form)
