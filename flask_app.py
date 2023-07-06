@@ -46,7 +46,13 @@ def replace_column_value(dataframe, column_name, string1, string2):
 def stringescape(string):
     newstring = string
     newstring = ('^').join(newstring.split('"'))
-    newstring = ("^").join(newstring.split("'"))
+    newstring = ("{").join(newstring.split("'"))
+    return(newstring)
+
+def unescape(string):
+    newstring = string
+    newstring = ('"').join(newstring.split('^'))
+    newstring = ("'").join(newstring.split("{"))
     return(newstring)
 
 def refresh_ids(dataframe):
@@ -200,7 +206,7 @@ def data():
 
         for specific_remove_id in personal_remove_ids:
             if(request.form.get(specific_remove_id)):
-                actual_remove_id = (" ").join(specific_remove_id.split("_"))
+                actual_remove_id = unescape((" ").join(specific_remove_id.split("_")))
                 recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
                 recipes_indicies = list(recipes_dataframe.index.values)
                 personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
@@ -209,8 +215,8 @@ def data():
         for specific_edit_id in personal_edit_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("&"))].index.values,"is_edit"] = "two"
-                target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == (" ").join(target.split("&"))].index.values,"title"])[0]
+                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == unescape((" ").join(target.split("&")))].index.values,"is_edit"] = "two"
+                target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == unescape((" ").join(target.split("&")))].index.values,"title"])[0]
                 personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
@@ -230,7 +236,7 @@ def data():
             recipes_dataframe.loc[index_to_change,"instructions"] = changed
             recipes_dataframe.loc[index_to_change,"title"] = changed_title
             recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
-    edi_form.instruch.data = (" ").join(target.split("&"))
+    edi_form.instruch.data = unescape((" ").join(target.split("&")))
     edi_form.titel.data = target_title
 
     if(len(recipes_indicies) > 0):
@@ -239,8 +245,8 @@ def data():
         for instruction in recipes_dataframe["instructions"]:
             recipe_index = recipes_indicies[count]
             title = recipes_dataframe.loc[recipe_index,"title"]
-            personal_remove_id = ("_").join(instruction.split(" "))
-            personal_edit_id = ("&").join(instruction.split(" "))
+            personal_remove_id = unescape(("_").join(instruction.split(" ")))
+            personal_edit_id = unescape(("&").join(instruction.split(" ")))
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
                 recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
