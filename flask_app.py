@@ -175,7 +175,6 @@ def data():
             reci_form.instru.data = ""
             reci_form.tetil.data = ""
 
-
     shopping_list_ids = make_shopping_list_ids(shopping_list, shopping_list_indicies, shops)
 
     remove_recipe_ids = make_recipe_ids(recipes_indicies, "_")
@@ -198,7 +197,7 @@ def data():
 
         for specific_remove_id in remove_recipe_ids:
             if(request.form.get(specific_remove_id)):
-                actual_index = specific_remove_id.split("_")[-1]
+                actual_index = int(specific_remove_id.split("_")[-1])
                 recipes_dataframe.drop([actual_index], inplace=True)
                 recipes_indicies = list(recipes_dataframe.index.values)
                 remove_recipe_ids = make_recipe_ids(recipes_indicies, "_")
@@ -208,7 +207,7 @@ def data():
         for specific_edit_id in edit_recipe_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                actual_index = target.split("v")[-1]
+                actual_index = int(target.split("v")[-1])
                 recipes_dataframe.loc[actual_index,"is_edit"] = "two"
                 title_to_edit = list(recipes_dataframe.loc[actual_index,"title"])[0]
                 instructions_to_edit = list(recipes_dataframe.loc[actual_index,"instructions"])[0]
