@@ -237,7 +237,7 @@ def data():
     edi_form.titel.data = title_to_edit
 
     filenames = []
-    for this_number in recipe_indicies:
+    for this_number in recipes_indicies:
         specific_filename_to_save = "image_" + this_number + ".jpg"
         filenames.append(specific_filename_to_save)
         my_file = recipes_dataframe.loc[int(this_number),"image"]
