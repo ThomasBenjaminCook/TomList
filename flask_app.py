@@ -63,6 +63,9 @@ def make_recipe_ids(recipes_indicies, boundary):
         count = count + 1 
     return(weird_ids)
 
+def save_image(file,filename):
+    file.save(THIS_FOLDER / "static" / filename)
+
 class Kart(FlaskForm):
     itemer = StringField()
     submit1 = SubmitField('Submit')
@@ -95,14 +98,6 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
     databasename="ThomasAppMaker$default",
 )
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
-
-# class Recipe(engine.Model):
-#     __tablename__ = "recipe"
-#     itemID = engine.Column(engine.Integer, primary_key=True)
-#     title = engine.Column(engine.String(4096))
-#     instructions = engine.Column(engine.String(4096))
-#     is_edit = engine.Column(engine.String(4096))
-#     image = engine.Column(engine.LargeBinary)
 
 @app.route("/", methods = ["GET","POST"])
 def data():
@@ -241,19 +236,31 @@ def data():
     edi_form.instruch.data = instructions_to_edit
     edi_form.titel.data = title_to_edit
 
+    filenames = []
+    for this_number in recipe_indicies:
+        specific_filename_to_save = "image_" + this_number ".jpg"
+        filenames.append(specific_filename_to_save)
+        my_file = recipes_dataframe.loc[int(this_number),"image"]
+        save_image(my_file, specific_filename_to_save)
+
     if(len(recipes_indicies) > 0):
         recipe_string = " "
         count = 0
         for instruction in recipes_dataframe["instructions"]:
             recipe_index = recipes_indicies[count]
             title = recipes_dataframe.loc[recipe_index,"title"]
+            recipe_image = recipes_dataframe.loc[recipe_index,"image"]
+            specific_image_name = filenames[count]
             personal_remove_id = "Recipe_" + str(recipe_index)
             personal_edit_id = "Recipev" + str(recipe_index)
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
                 recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
                 recipe_string = recipe_string + '<div id="recipe"><b>' + title +"</b></br></br>"
-                recipe_string = recipe_string + '<div class="image-upload"><label for="file-input"><img src="{{url_for(' + "'static', filename='default.jpg')}}"+'" width=25%/></label><form method="POST" enctype="multipart/form-data"><input type="file" id="file-input" name="'+personal_remove_id+"_image"+'"></form></div>'
+                if(recipe_image != None):
+                    recipe_string = recipe_string + '<div class="image-upload"><label for="file-input"><img src="{{url_for(' + "'static', filename='default.jpg')}}"+'" width=25%/></label><form method="POST" enctype="multipart/form-data"><input type="file" id="file-input" name="'+personal_remove_id+"_image"+'"></form></div>'
+                else:
+                    recipe_string = recipe_string + '<div class="image-upload"><label for="file-input"><img src="{{url_for(' + "'static', filename='"+specific_image_name+"')}}"+'" width=25%/></label><form method="POST" enctype="multipart/form-data"><input type="file" id="file-input" name="'+personal_remove_id+"_image"+'"></form></div>'
                 recipe_string = recipe_string +  instruction + "</br></br><form method='POST'><input type='submit' value='remove' name='"+personal_remove_id+"'/>   <input type='submit' value='edit' name='"+personal_edit_id+"'/></form></div></br>"
             count = count + 1
     else:
