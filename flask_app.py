@@ -222,7 +222,7 @@ def data():
                 if(file.filename != ""):
                     image_index = int(name.split("_")[1])
                     recipes_dataframe.loc[image_index,"image"] = file
-                    return(file.filename + " " + name)
+                    recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
