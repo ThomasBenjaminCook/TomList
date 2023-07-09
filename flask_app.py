@@ -1,8 +1,5 @@
 import pandas as pd
-import statistics
-import random
-from datetime import datetime, timedelta
-from flask import Flask, request, render_template_string, url_for
+from flask import Flask, request, render_template_string
 from pathlib import Path
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
@@ -98,6 +95,14 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
     databasename="ThomasAppMaker$default",
 )
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
+
+# class Recipe(engine.Model):
+#     __tablename__ = "recipe"
+#     itemID = engine.Column(engine.Integer, primary_key=True)
+#     title = engine.Column(engine.String(4096))
+#     instructions = engine.Column(engine.String(4096))
+#     is_edit = engine.Column(engine.String(4096))
+#     image = engine.Column(engine.LargeBinary)
 
 @app.route("/", methods = ["GET","POST"])
 def data():
@@ -221,7 +226,7 @@ def data():
                 file = request.files[name]
                 if(file.filename != ""):
                     image_index = int(name.split("_")[1])
-                    recipes_dataframe.loc[image_index,"image"] = file
+                    recipes_dataframe.loc[image_index,"image"] = file.read()
                     recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
