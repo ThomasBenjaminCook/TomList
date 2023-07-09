@@ -183,6 +183,7 @@ def data():
 
     target = "None"
     title_to_edit = "None"
+    instructions_to_edit = "None"
     if request.method == "POST":
         count = 0
         while count < len(shopping_list):
