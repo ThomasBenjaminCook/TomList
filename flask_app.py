@@ -43,29 +43,28 @@ def replace_column_value(dataframe, column_name, string1, string2):
     new_dataframe[column_name] = new_dataframe[column_name].replace(string1, string2)
     return new_dataframe
 
-def stringescape(string):
-    newstring = string
-    newstring = ('^').join(newstring.split('"'))
-    newstring = ("{").join(newstring.split("'"))
-    return(newstring)
+def make_shopping_list_ids(shopping_list, shopping_list_indicies, shops):
+    weird_ids = []
+    count = 0
+    while count < len(shopping_list):
+        item = shopping_list[count]
+        target_index = shopping_list_indicies[count]
+        if(shops[item] == "ALDI"):
+            weird_id = "ALDI_"+str(target_index)
+        if(shops[item] == "Coles"):
+            weird_id = "Coles_"+str(target_index)
+        weird_ids.append(weird_id)
+        count = count + 1 
+    return(weird_ids)
 
-def unescape(string):
-    newstring = string
-    newstring = ('"').join(newstring.split('^'))
-    newstring = ("'").join(newstring.split("{"))
-    return(newstring)
-
-def refresh_ids(dataframe):
-    personal_remove_ids = []
-    personal_edit_ids = []
-    names = []
-    for instruction in dataframe["instructions"]:
-        personal_remove_id = stringescape(("_").join(instruction.split(" ")))
-        personal_remove_ids.append(personal_remove_id)
-        personal_edit_id = stringescape(("&").join(instruction.split(" ")))
-        personal_edit_ids.append(personal_edit_id)
-        names.append(personal_remove_id+"_image")
-    return(personal_remove_ids,personal_edit_ids,names)
+def make_recipe_ids(recipes_indicies, boundary):
+    weird_ids = []
+    count = 0
+    while count < len(recipes_indicies):
+        target_index = recipes_indicies[count]
+        weird_ids.append("Recipe" + boundary + str(target_index))
+        count = count + 1 
+    return(weird_ids)
 
 class Kart(FlaskForm):
     itemer = StringField()
@@ -106,6 +105,7 @@ def data():
     shopping_list_dataframe = pd.read_sql_table("shopping_list", con=engine, index_col="itemID")
     total_list_dataframe = pd.read_sql_table("all_items", con=engine, index_col="itemID")
     recipes_dataframe = pd.read_sql_table("recipe", con=engine, index_col="itemID")
+
     recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","one","zero")
     recipes_dataframe = replace_column_value(recipes_dataframe,"is_edit","two","one")
 
@@ -176,26 +176,17 @@ def data():
             reci_form.tetil.data = ""
 
 
-    weird_ids = []
-    count = 0
-    while count < len(shopping_list):
-        item = shopping_list[count]
-        target_index = shopping_list_indicies[count]
-        if(shops[item] == "ALDI"):
-            weird_id = "ALDI_"+str(target_index)
-        if(shops[item] == "Coles"):
-            weird_id = "Coles_"+str(target_index)
-        weird_ids.append(weird_id)
-        count = count + 1 
+    shopping_list_ids = make_shopping_list_ids(shopping_list, shopping_list_indicies, shops)
 
-    personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
+    remove_recipe_ids = make_recipe_ids(recipes_indicies, "_")
+    edit_recipe_ids = make_recipe_ids(recipes_indicies, "v")
 
     target = "None"
-    target_title = "None"
+    title_to_edit = "None"
     if request.method == "POST":
         count = 0
         while count < len(shopping_list):
-            weird_id = weird_ids[count]
+            weird_id = shopping_list_ids[count]
             item = shopping_list[count]
             if(request.form.get(weird_id)):
                 shopping_list_dataframe.drop([int(weird_id.split("_")[-1])], axis=0, inplace=True)
@@ -204,24 +195,28 @@ def data():
                 shopping_list_dataframe.to_sql("shopping_list", con=engine, if_exists="replace")
             count = count + 1
 
-        for specific_remove_id in personal_remove_ids:
+        for specific_remove_id in remove_recipe_ids:
             if(request.form.get(specific_remove_id)):
-                actual_remove_id = unescape((" ").join(specific_remove_id.split("_")))
-                recipes_dataframe.drop(recipes_dataframe[recipes_dataframe["instructions"] == actual_remove_id].index.values, inplace=True)
+                actual_index = specific_remove_id.split("_")[-1]
+                recipes_dataframe.drop([actual_index], inplace=True)
                 recipes_indicies = list(recipes_dataframe.index.values)
-                personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
+                remove_recipe_ids = make_recipe_ids(recipes_indicies, "_")
+                edit_recipe_ids = make_recipe_ids(recipes_indicies, "v")
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-        for specific_edit_id in personal_edit_ids:
+        for specific_edit_id in edit_recipe_ids:
             if(request.form.get(specific_edit_id)):
                 target = specific_edit_id
-                recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == unescape((" ").join(target.split("&")))].index.values,"is_edit"] = "two"
-                target_title = list(recipes_dataframe.loc[recipes_dataframe[recipes_dataframe["instructions"] == unescape((" ").join(target.split("&")))].index.values,"title"])[0]
-                personal_remove_ids,personal_edit_ids,names = refresh_ids(recipes_dataframe)
+                actual_index = target.split("v")[-1]
+                recipes_dataframe.loc[actual_index,"is_edit"] = "two"
+                title_to_edit = list(recipes_dataframe.loc[actual_index,"title"])[0]
+                instructions_to_edit = list(recipes_dataframe.loc[actual_index,"instructions"])[0]
+                remove_recipe_ids = make_recipe_ids(recipes_indicies, "_")
+                edit_recipe_ids = make_recipe_ids(recipes_indicies, "v")
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
-        for name_without_image in personal_remove_ids:
-            name = name_without_image+"_image"
+        for name_without_image in remove_recipe_ids:
+            name = name_without_image + "_image"
             if(name in request.files):
                 file = request.files[name]
                 if(file.filename != ""):
@@ -236,8 +231,8 @@ def data():
             recipes_dataframe.loc[index_to_change,"instructions"] = changed
             recipes_dataframe.loc[index_to_change,"title"] = changed_title
             recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
-    edi_form.instruch.data = unescape((" ").join(target.split("&")))
-    edi_form.titel.data = target_title
+    edi_form.instruch.data = instructions_to_edit
+    edi_form.titel.data = title_to_edit
 
     if(len(recipes_indicies) > 0):
         recipe_string = " "
@@ -245,8 +240,8 @@ def data():
         for instruction in recipes_dataframe["instructions"]:
             recipe_index = recipes_indicies[count]
             title = recipes_dataframe.loc[recipe_index,"title"]
-            personal_remove_id = unescape(("_").join(instruction.split(" ")))
-            personal_edit_id = unescape(("&").join(instruction.split(" ")))
+            personal_remove_id = "Recipe_" + str(recipe_index)
+            personal_edit_id = "Recipev" + str(recipe_index)
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
                 recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
@@ -262,11 +257,10 @@ def data():
     count = 0
     while count < len(shopping_list):
         item = shopping_list[count]
-        target_index = shopping_list_indicies[count]
         if(shops[item] == "ALDI"):
-            aldistring = aldistring + '<input type="submit" value="'+item+'" name="'+weird_ids[count]+'"/></br></br>'
+            aldistring = aldistring + '<input type="submit" value="'+item+'" name="'+shopping_list_ids[count]+'"/></br></br>'
         if(shops[item] == "Coles"):
-            colesstring = colesstring + '<input type="submit" value="'+item+'" name="'+weird_ids[count]+'"/></br></br>'
+            colesstring = colesstring + '<input type="submit" value="'+item+'" name="'+shopping_list_ids[count]+'"/></br></br>'
         count = count + 1 
 
     option_string = " "
@@ -274,8 +268,9 @@ def data():
         option_string = option_string + '<option value="'+item+'">'
 
     autostring = ' '
-    for namer in names:
-        autostring = autostring + " $(\"input[name='"+namer+"']\").change(function() { this.form.submit(); }); "
+    for the_id in remove_recipe_ids:
+        the_right_id = the_id+"_image"
+        autostring = autostring + " $(\"input[name='"+the_right_id+"']\").change(function() { this.form.submit(); }); "
 
     first_layer = []
     first_layer.append(aldistring)
