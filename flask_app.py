@@ -220,6 +220,8 @@ def data():
             if(name in request.files):
                 file = request.files[name]
                 if(file.filename != ""):
+                    image_index = int(name.split("_")[1])
+                    recipes_dataframe.loc[image_index,"image"] = file
                     return(file.filename + " " + name)
 
     edi_form = Edit()
