@@ -220,7 +220,7 @@ def data():
             if(name in request.files):
                 file = request.files[name]
                 if(file.filename != ""):
-                    return(file.filename + " " + (" ").join(specific_edit_id.split("_")))
+                    return(file.filename + " " + name)
 
     edi_form = Edit()
     if (edi_form.validate_on_submit() and edi_form.submit5.data):
