@@ -209,8 +209,8 @@ def data():
                 target = specific_edit_id
                 actual_index = int(target.split("v")[-1])
                 recipes_dataframe.loc[actual_index,"is_edit"] = "two"
-                title_to_edit = list(recipes_dataframe.loc[actual_index,"title"])
-                instructions_to_edit = list(recipes_dataframe.loc[actual_index,"instructions"])
+                title_to_edit = recipes_dataframe.loc[actual_index,"title"]
+                instructions_to_edit = recipes_dataframe.loc[actual_index,"instructions"]
                 remove_recipe_ids = make_recipe_ids(recipes_indicies, "_")
                 edit_recipe_ids = make_recipe_ids(recipes_indicies, "v")
                 recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
