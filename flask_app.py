@@ -223,7 +223,7 @@ def data():
                 file = request.files[name]
                 if(file.filename != ""):
                     image_index = int(name.split("_")[1])
-                    recipes_dataframe.loc[image_index,"image"] = file.read()
+                    recipes_dataframe.loc[image_index,"image"] = file
                     recipes_dataframe.to_sql("recipe", con=engine, if_exists="replace", index_label="itemID")
 
     edi_form = Edit()
@@ -243,7 +243,7 @@ def data():
         specific_filename_to_save = "image_" + str(this_number) + ".jpg"
         filenames.append(specific_filename_to_save)
         my_file_string = recipes_dataframe.loc[int(this_number),"image"]
-        my_file_bytes = base64.b64decode(my_file_string, encoder="utf-8")
+        my_file_bytes = base64.b64decode(my_file_string)
         my_file = io.BytesIO(my_file_bytes)
         save_image(my_file, specific_filename_to_save)
 
