@@ -254,7 +254,10 @@ def data():
             recipe_index = recipes_indicies[count]
             title = recipes_dataframe.loc[recipe_index,"title"]
             recipe_image = recipes_dataframe.loc[recipe_index,"image"]
-            specific_image_name = filenames[count]
+            if(len(specific_image_name) > 0):
+                specific_image_name = filenames[count]
+            else:
+                specific_image_name = "default.jpg"
             personal_remove_id = "Recipe_" + str(recipe_index)
             personal_edit_id = "Recipev" + str(recipe_index)
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
