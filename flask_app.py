@@ -254,7 +254,7 @@ def data():
             recipe_index = recipes_indicies[count]
             title = recipes_dataframe.loc[recipe_index,"title"]
             recipe_image = recipes_dataframe.loc[recipe_index,"image"]
-            if(len(specific_image_name) > 0):
+            if(len(filenames) > 0):
                 specific_image_name = filenames[count]
             else:
                 specific_image_name = "default.jpg"
