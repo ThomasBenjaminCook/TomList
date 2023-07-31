@@ -58,7 +58,7 @@
     }
 
     .biggie {
-      width: 100%;
+      width: 60%;
       height: 150px;
       padding: 12px 20px;
       box-sizing: border-box;
@@ -150,10 +150,10 @@
       <form method="POST">
         <fieldset>
         <legend>New Recipe</legend>
-          <label for="title">Title:</label> 
+          <label for="title"><b>Title:</b></label> 
           {{ reci_form.hidden_tag() }} 
           {{ reci_form.tetil(class="form-control", autocomplete="off") }} </br></br>
-          <label for="reci">Recipe:</br></label> 
+          <label for="reci"><b>Recipe:</b></br></br></label> 
           {{ reci_form.instru(class="form-control biggie", autocomplete="off") }} </br></br>
           {{ reci_form.submit4() }}
         </fieldset>
