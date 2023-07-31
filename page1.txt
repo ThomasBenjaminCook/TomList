@@ -57,6 +57,18 @@
       padding: 1.5%;
     }
 
+    .biggie {
+      width: 100%;
+      height: 150px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 16px;
+      resize: none;
+    }
+
   </style>
 </head>
 <body>
@@ -141,8 +153,8 @@
           <label for="title">Title:</label> 
           {{ reci_form.hidden_tag() }} 
           {{ reci_form.tetil(class="form-control", autocomplete="off") }} </br></br>
-          <label for="reci">Recipe:</label> 
-          {{ reci_form.instru(class="form-control", autocomplete="off") }} </br></br>
+          <label for="reci">Recipe:</br></label> 
+          {{ reci_form.instru(class="form-control biggie", autocomplete="off") }} </br></br>
           {{ reci_form.submit4() }}
         </fieldset>
       </form>
