@@ -57,10 +57,6 @@
       padding: 1.5%;
     }
 
-    .biggie {
-      height: 20%;
-    }
-
   </style>
 </head>
 <body>
