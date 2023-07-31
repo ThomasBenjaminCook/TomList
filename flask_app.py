@@ -147,7 +147,6 @@ def data():
         else:
             add_form.itemire.data = ""
 
-
     remove_form = Remover()
     if (remove_form.validate_on_submit() and remove_form.submit3.data):
         if(remove_form.itemerem.data not in shopping_list):
@@ -261,7 +260,7 @@ def data():
             personal_remove_id = "Recipe_" + str(recipe_index)
             personal_edit_id = "Recipev" + str(recipe_index)
             if(recipes_dataframe.loc[recipe_index,"is_edit"] == "two"):
-                recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
+                recipe_string = recipe_string + '<div id="recipe"><form method="POST"><fieldset><legend>Edit Recipe</legend><label for="titler">Title:</label> {{ edi_form.hidden_tag() }} {{ edi_form.titel(class="form-control", autocomplete="off") }} </br></br> <label for="recr">Recipe:</label> {{ edi_form.instruch(class="form-control biggie", autocomplete="off") }} </br></br> {{ edi_form.submit5() }}</fieldset></form></div>'
             else:
                 recipe_string = recipe_string + '<div id="recipe"><b>' + title +"</b></br></br>"
                 if(recipe_image != None):
